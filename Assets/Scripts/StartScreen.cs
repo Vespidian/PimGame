@@ -10,6 +10,8 @@ public class StartScreen : MonoBehaviour
 	public RawImage background;
 	public Text text;
 
+    public Text FPS;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -21,5 +23,8 @@ public class StartScreen : MonoBehaviour
     	image.enabled = false;
     	background.enabled = false;
     	text.enabled = false;
+    }
+    void Update() {
+        FPS.text = (1f / Time.unscaledDeltaTime).ToString();
     }
 }

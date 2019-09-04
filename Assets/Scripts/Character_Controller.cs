@@ -11,12 +11,14 @@ public class Character_Controller : MonoBehaviour
 	public float speed = 6.0f;
 	public float sprint = 10.0f;
 	public float crouch = 4.0f;
-	public float scrollSpeed = 0.5f;
+	public float scrollSpeed = 0.3f;
 	public float scrollDist = 5.0f;
 	public float scrollMin = 2;
 	public float scrollMax = 60;
 	public float jumpHeight = 5.0f;
+	public RaycastHit hit;
 
+	public int pokeForce = 40;
 	private int walkType;//0 = walk / 1 = sprint / 2 = crouch
 	private bool landed;
 
@@ -55,40 +57,47 @@ public class Character_Controller : MonoBehaviour
 
     void FixedUpdate() {
 	   if(walkType == 0){
-		   translation = Input.GetAxis("Vertical") * speed; 
-		   strafe = Input.GetAxis("Horizontal") * speed;
+		    translation = Input.GetAxis("Vertical") * speed; 
+		    strafe = Input.GetAxis("Horizontal") * speed;
 		   
-		   direction = transform.InverseTransformDirection(GetComponent<Rigidbody>().velocity);
-		   direction.z = translation;
-		   direction.x = strafe;
-		   rb.velocity = transform.TransformDirection(direction);
+		    direction = transform.InverseTransformDirection(GetComponent<Rigidbody>().velocity);
+		    direction.z = translation;
+		    direction.x = strafe;
+		    rb.velocity = transform.TransformDirection(direction);
 		}
 		if(walkType == 1) {
 			translation = Input.GetAxis("Vertical") * sprint; 
-		   strafe = Input.GetAxis("Horizontal") * sprint;
+		    strafe = Input.GetAxis("Horizontal") * sprint;
 		   
-		   direction = transform.InverseTransformDirection(GetComponent<Rigidbody>().velocity);
-		   direction.z = translation;
-		   direction.x = strafe;
+		    direction = transform.InverseTransformDirection(GetComponent<Rigidbody>().velocity);
+		    direction.z = translation;
+		    direction.x = strafe;
 			rb.velocity = transform.TransformDirection(direction);
 		}
 		if(walkType == 2) {
 			translation = Input.GetAxis("Vertical") * crouch; 
-		   strafe = Input.GetAxis("Horizontal") * crouch;
+		    strafe = Input.GetAxis("Horizontal") * crouch;
 		   
-		   direction = transform.InverseTransformDirection(GetComponent<Rigidbody>().velocity);
-		   direction.z = translation;
-		   direction.x = strafe;
+		    direction = transform.InverseTransformDirection(GetComponent<Rigidbody>().velocity);
+		    direction.z = translation;
+		    direction.x = strafe;
 			rb.velocity = transform.TransformDirection(direction);
 		}
+
+		if(Input.GetMouseButtonDown(0)){
+	    	if (Physics.Raycast(GameObject.Find("Camera").transform.position, GameObject.Find("Camera").transform.forward, out hit, Mathf.Infinity)){
+	    		Debug.DrawRay(GameObject.Find("Camera").transform.position, GameObject.Find("Camera").transform.forward * hit.distance, Color.red);
+	    		destPoint.transform.localPosition = new Vector3(0, 0, hit.distance);
+	    	}
+	    }
     }
 
     void jump(){
     	//rb.velocity = new Vector3(0, jumpHeight, 0);
     	rb.AddForce(0, jumpHeight, 0, ForceMode.Impulse);
     }
-
     void OnCollisionEnter(Collision col){
     	landed = true;
     }
+
 }

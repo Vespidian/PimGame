@@ -18,7 +18,6 @@ public class Weapons : MonoBehaviour
     {
         weaponText = GameObject.Find("Weapon").GetComponent<Text>();
         changingWeapon = true;
-        weaponText.text = "grav gun";
     }
 
     // Update is called once per frame
@@ -55,7 +54,12 @@ public class Weapons : MonoBehaviour
     	}
     	if(weapon == 2){//IMPULSE
     		weaponText.text = "Impulse Gun";
-            
     	}
+        /*if(weapon == 3){//THRUSTER CANNON *REMOVED*
+            weaponText.text = "Thruster Cannon";  
+        }*/
+        /*if(weapon == 4){//GRAVITY GUN *BUGGED*
+            weaponText.text = "Gravity Gun";  
+        }*/
     }
 }

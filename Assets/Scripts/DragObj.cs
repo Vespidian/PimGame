@@ -20,7 +20,6 @@ public class DragObj : MonoBehaviour
 	private bool freezeObject = false;
 	private bool toggleHold = false;
 
-	//public Transform destPoint;
 	private Character_Controller thePlayer;
 	private Weapons playerTools;
 	private CamMouseLook cameraVars; 
@@ -35,26 +34,23 @@ public class DragObj : MonoBehaviour
         objRb = this.gameObject.GetComponent<Rigidbody>();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
     void OnMouseDown() {
-    	if(playerTools.weapon == 2){
-    		ShootObject();
-    	}
     	if(playerTools.weapon == 1){
 	    	stopRotation = true;
 	    	freezeObject = false;
     		toggleHold = true;
 
     		startRot = transform.rotation;
-	    	//Transforms this objects position from worldspace to the camera's localspace
-	    	dragObjRel = GameObject.Find("Camera").transform.InverseTransformPoint(this.transform.position);
+    		//Transforms this objects position from worldspace to the camera's localspace
+    		dragObjRel = GameObject.Find("Camera").transform.InverseTransformPoint(this.transform.position);
 		   	thePlayer.scrollDist = dragObjRel.z;
-	    	thePlayer.destPoint.transform.localPosition = new Vector3(0, 0, dragObjRel.z);
+		   	thePlayer.destPoint.transform.localPosition = new Vector3(0, 0, dragObjRel.z);
+
+		   	/*thePlayer.scrollDist = thePlayer.hit.distance;
+		   	thePlayer.destPoint.transform.localPosition = new Vector3(0, 0, thePlayer.hit.distance);*/
+    	}
+    	if(playerTools.weapon == 2){
+    		ShootObject();
     	}
     }
     void OnMouseUp() {
@@ -62,6 +58,7 @@ public class DragObj : MonoBehaviour
 	    	stopRotation = false;
 	    }
 	    toggleHold = false;
+	    cameraVars.mouseMove = true;
     }
     void OnMouseOver() {
     	if(Input.GetMouseButtonDown(1)){
@@ -79,41 +76,43 @@ public class DragObj : MonoBehaviour
 
 		    }else if(freezeObject == true){
 	    		FreezeObject();
-
 	    	}
-
 		    if(Input.GetKeyDown(KeyCode.F)){
 		   		DynamicObject();
 		   	}
-		    if(Input.GetAxis("Mouse ScrollWheel") < 0){
-		   		thePlayer.scrollDist -= thePlayer.scrollSpeed;
-		    }
-		    if(Input.GetAxis("Mouse ScrollWheel") > 0){
-		   		thePlayer.scrollDist += thePlayer.scrollSpeed;
-		    }
-			thePlayer.scrollDist = Mathf.Clamp(thePlayer.scrollDist, thePlayer.scrollMin, thePlayer.scrollMax);
-			thePlayer.destPoint.transform.localPosition = new Vector3(0, 0, thePlayer.scrollDist);
 
+			//LineCasting();
+
+		   	scrollDestination();
 			if((Input.GetKey(KeyCode.E)) && (toggleHold == true)){
-				if(Input.GetKeyDown(KeyCode.E)){
-					//objRotation = new Vector2(transform.localRotation.y, transform.localRotation.x);
-				}
-
-
 				cameraVars.mouseMove = false;
-				mousePos = new Vector2(Input.GetAxisRaw("Mouse Y"), Input.GetAxisRaw("Mouse X"));
+				mousePos = new Vector2(Input.GetAxisRaw("Mouse X"), Input.GetAxisRaw("Mouse Y"));
 				objRotation += mousePos;
 
-
 				rot = Quaternion.Euler(startRot.x + objRotation.x, startRot.y + -objRotation.y, startRot.z);
-				transform.rotation = Quaternion.Lerp(transform.rotation, rot, 10);
+				transform.RotateAround(transform.position, GameObject.Find("Camera").transform.right, mousePos.y);
+				transform.RotateAround(transform.position, GameObject.Find("Camera").transform.up, -mousePos.x);
 			}else if(Input.GetKeyUp(KeyCode.E))
 			{
 				cameraVars.mouseMove = true;
 			}
+			if(Input.GetMouseButton(0)){
+
+         	}
 		}
 		if(playerTools.weapon == 2){
 
+		}
+		if(playerTools.weapon == 4){
+			if(Input.GetMouseButton(0)){
+				toggleHold = true;
+			   	scrollDestination();
+				HoldObject();
+			}
+			if(Input.GetMouseButtonUp(0)){
+				toggleHold = false;
+				DynamicObject();
+			}
 		}
     }
 
@@ -121,6 +120,19 @@ public class DragObj : MonoBehaviour
     	if(col.gameObject.tag == "Trash"){
     		Destroy(this.gameObject);
     	}
+    }
+
+    void scrollDestination(){
+    	if(toggleHold == true){
+	    	if(Input.GetAxis("Mouse ScrollWheel") < 0){
+			   	thePlayer.scrollDist -= thePlayer.scrollSpeed;
+			}
+		    if(Input.GetAxis("Mouse ScrollWheel") > 0){
+			   	thePlayer.scrollDist += thePlayer.scrollSpeed;
+			}
+			thePlayer.scrollDist = Mathf.Clamp(thePlayer.scrollDist, thePlayer.scrollMin, thePlayer.scrollMax);
+			thePlayer.destPoint.transform.localPosition = new Vector3(0, 0, thePlayer.scrollDist);
+		}
     }
 
     void DynamicObject(){
@@ -136,6 +148,7 @@ public class DragObj : MonoBehaviour
 		objRb.freezeRotation = true;
 		objRb.isKinematic = false;
 		objRb.velocity = (thePlayer.destPoint.position - this.transform.position) * dragSpeed;
+		//objRb.velocity = ((thePlayer.destPoint.position + thePlayer.hit.point) - this.transform.position) * dragSpeed;
     }
     void FreezeObject() {
     	objRb.useGravity = false;
@@ -144,6 +157,6 @@ public class DragObj : MonoBehaviour
     }
     void ShootObject(){
     	DynamicObject();
-	    objRb.AddForce(GameObject.Find("Camera").transform.forward * 40, ForceMode.Impulse);
+	    thePlayer.hit.rigidbody.AddForceAtPosition(GameObject.Find("Camera").transform.forward * thePlayer.pokeForce * 1000, thePlayer.hit.point);
     }
 }
