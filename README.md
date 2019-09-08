@@ -1,4 +1,4 @@
-## PimGame
+# PimGame
 
-# Controls
+## Controls
 + 
