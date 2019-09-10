@@ -18,6 +18,10 @@ public class Character_Controller : MonoBehaviour
 	public float jumpHeight = 5.0f;
 	public RaycastHit hit;
 
+	/*GameObject weldSelect1;
+	GameObject weldSelect2;
+	private int selectObject = 0;*/
+
 	public int pokeForce = 40;
 	private int walkType;//0 = walk / 1 = sprint / 2 = crouch
 	private bool landed;
@@ -84,11 +88,25 @@ public class Character_Controller : MonoBehaviour
 			rb.velocity = transform.TransformDirection(direction);
 		}
 
-		if(Input.GetMouseButtonDown(0)){
 	    	if (Physics.Raycast(GameObject.Find("Camera").transform.position, GameObject.Find("Camera").transform.forward, out hit, Mathf.Infinity)){
 	    		Debug.DrawRay(GameObject.Find("Camera").transform.position, GameObject.Find("Camera").transform.forward * hit.distance, Color.red);
-	    		destPoint.transform.localPosition = new Vector3(0, 0, hit.distance);
 	    	}
+		if(Input.GetMouseButtonDown(0)){
+	    	destPoint.transform.localPosition = new Vector3(0, 0, hit.distance);
+	    	/*if(playerTools.weapon == 3){
+				if(selectObject == 0){
+					selectObject++;
+					weldSelect1 = hit.transform.gameObject;
+				}
+				if(selectObject == 1){
+					selectObject++;
+					weldSelect2 = hit.transform.gameObject;
+				}
+				if(selectObject == 2){
+					selectObject -= 2;
+
+				}
+			}*/
 	    }
     }
 

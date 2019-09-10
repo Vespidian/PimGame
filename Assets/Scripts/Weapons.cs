@@ -7,7 +7,7 @@ public class Weapons : MonoBehaviour
 {
 	public bool changingWeapon = true;
 	public int weapon = 1;
-	private int numOfWeapons = 2;
+	private int numOfWeapons = 4;
 	Text weaponText;
 
     //Impulse variables
@@ -55,10 +55,16 @@ public class Weapons : MonoBehaviour
     	if(weapon == 2){//IMPULSE
     		weaponText.text = "Impulse Gun";
     	}
-        /*if(weapon == 3){//THRUSTER CANNON *REMOVED*
+        if(weapon == 3){//IMPULSE
+            weaponText.text = "Weld Tool";
+        }
+        if(weapon == 4){//IMPULSE
+            weaponText.text = "Delete Tool";
+        }
+        /*if(weapon == 5){//THRUSTER CANNON *REMOVED*
             weaponText.text = "Thruster Cannon";  
         }*/
-        /*if(weapon == 4){//GRAVITY GUN *BUGGED*
+        /*if(weapon == 6){//GRAVITY GUN *BUGGED*
             weaponText.text = "Gravity Gun";  
         }*/
     }

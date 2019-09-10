@@ -7,6 +7,7 @@ TagManager:
   - Collidable
   - Floor
   - Trash
+  - Water
   layers:
   - Default
   - TransparentFX

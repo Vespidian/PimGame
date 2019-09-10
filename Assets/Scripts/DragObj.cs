@@ -52,6 +52,7 @@ public class DragObj : MonoBehaviour
     	if(playerTools.weapon == 2){
     		ShootObject();
     	}
+
     }
     void OnMouseUp() {
     	if(playerTools.weapon == 1){
@@ -63,6 +64,11 @@ public class DragObj : MonoBehaviour
     void OnMouseOver() {
     	if(Input.GetMouseButtonDown(1)){
     		freezeObject = true;
+    	}
+    	if((Input.GetMouseButton(0)) || (Input.GetMouseButtonDown(1))){
+    		if(playerTools.weapon == 4){
+    			Destroy(this.gameObject);
+    		}
     	}
     }
 
@@ -100,10 +106,8 @@ public class DragObj : MonoBehaviour
 
          	}
 		}
-		if(playerTools.weapon == 2){
-
-		}
-		if(playerTools.weapon == 4){
+		//GRAVITY GUN CODE
+		/*if(playerTools.weapon == 5){
 			if(Input.GetMouseButton(0)){
 				toggleHold = true;
 			   	scrollDestination();
@@ -113,7 +117,7 @@ public class DragObj : MonoBehaviour
 				toggleHold = false;
 				DynamicObject();
 			}
-		}
+		}*/
     }
 
     void OnCollisionEnter(Collision col){

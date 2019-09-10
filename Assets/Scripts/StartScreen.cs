@@ -15,8 +15,14 @@ public class StartScreen : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        enableSplash();
         Invoke("disableSplash", 2);
         //disableSplash();
+    }
+    public void enableSplash(){
+        image.enabled = true;
+        background.enabled = true;
+        text.enabled = true;
     }
 
     public void disableSplash(){
