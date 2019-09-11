@@ -6,6 +6,9 @@
 + Number keys to spawn objects
 + R to reset the scene
 + Escape to pause / show menu
+##### Press c to enable flight
++ Control moves you down
++ Space moves you down
 
 ## Tools / Weapons List
 ### Physics Gun
