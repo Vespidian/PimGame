@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class DragObj : MonoBehaviour
 {
-
-	Quaternion rotation;
+	Quaternion rot;
+	Quaternion startRot;
 
 	Rigidbody objRb;
 	Vector3 dragObjRel;
@@ -13,8 +13,6 @@ public class DragObj : MonoBehaviour
 	Vector2 mousePos;
 	Vector2 smoothV;
 	Vector2 objRotation;
-	Quaternion rot;
-	Quaternion startRot;
 	public float dragSpeed = 20;
 	private bool stopRotation = false;
 	private bool freezeObject = false;
@@ -45,9 +43,6 @@ public class DragObj : MonoBehaviour
     		dragObjRel = GameObject.Find("Camera").transform.InverseTransformPoint(this.transform.position);
 		   	thePlayer.scrollDist = dragObjRel.z;
 		   	thePlayer.destPoint.transform.localPosition = new Vector3(0, 0, dragObjRel.z);
-
-		   	/*thePlayer.scrollDist = thePlayer.hit.distance;
-		   	thePlayer.destPoint.transform.localPosition = new Vector3(0, 0, thePlayer.hit.distance);*/
     	}
     	if(playerTools.weapon == 2){
     		ShootObject();
@@ -66,7 +61,7 @@ public class DragObj : MonoBehaviour
     		freezeObject = true;
     	}
     	if((Input.GetMouseButton(0)) || (Input.GetMouseButtonDown(1))){
-    		if(playerTools.weapon == 4){
+    		if(playerTools.weapon == 3){
     			Destroy(this.gameObject);
     		}
     	}
@@ -83,11 +78,10 @@ public class DragObj : MonoBehaviour
 		    }else if(freezeObject == true){
 	    		FreezeObject();
 	    	}
+
 		    if(Input.GetKeyDown(KeyCode.F)){
 		   		DynamicObject();
 		   	}
-
-			//LineCasting();
 
 		   	scrollDestination();
 			if((Input.GetKey(KeyCode.E)) && (toggleHold == true)){
@@ -106,18 +100,6 @@ public class DragObj : MonoBehaviour
 
          	}
 		}
-		//GRAVITY GUN CODE
-		/*if(playerTools.weapon == 5){
-			if(Input.GetMouseButton(0)){
-				toggleHold = true;
-			   	scrollDestination();
-				HoldObject();
-			}
-			if(Input.GetMouseButtonUp(0)){
-				toggleHold = false;
-				DynamicObject();
-			}
-		}*/
     }
 
     void OnCollisionEnter(Collision col){
@@ -138,7 +120,6 @@ public class DragObj : MonoBehaviour
 			thePlayer.destPoint.transform.localPosition = new Vector3(0, 0, thePlayer.scrollDist);
 		}
     }
-
     void DynamicObject(){
     	objRb.useGravity = true;
 		objRb.freezeRotation = false;

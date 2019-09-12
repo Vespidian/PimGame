@@ -7,11 +7,8 @@ public class Weapons : MonoBehaviour
 {
 	public bool changingWeapon = true;
 	public int weapon = 1;
-	private int numOfWeapons = 4;
+	private int numOfWeapons = 3;
 	Text weaponText;
-
-    //Impulse variables
-
 
     // Start is called before the first frame update
     void Start()
@@ -55,10 +52,7 @@ public class Weapons : MonoBehaviour
     	if(weapon == 2){//IMPULSE
     		weaponText.text = "Impulse Gun";
     	}
-        if(weapon == 3){//IMPULSE
-            weaponText.text = "Weld Tool";
-        }
-        if(weapon == 4){//IMPULSE
+        if(weapon == 3){//DELETE OBJECTS
             weaponText.text = "Delete Tool";
         }
         /*if(weapon == 5){//THRUSTER CANNON *REMOVED*

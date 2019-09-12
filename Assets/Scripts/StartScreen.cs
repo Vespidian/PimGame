@@ -16,16 +16,16 @@ public class StartScreen : MonoBehaviour
     void Start()
     {
         enableSplash();
-        Invoke("disableSplash", 2);
-        //disableSplash();
+        //Invoke("disableSplash", 2);
+        disableSplash();
     }
-    public void enableSplash(){
+    void enableSplash(){
         image.enabled = true;
         background.enabled = true;
         text.enabled = true;
     }
 
-    public void disableSplash(){
+    void disableSplash(){
     	image.enabled = false;
     	background.enabled = false;
     	text.enabled = false;

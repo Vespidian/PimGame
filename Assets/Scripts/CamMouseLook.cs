@@ -13,14 +13,12 @@ public class CamMouseLook : MonoBehaviour
 	GameObject character;
 	
     // Start is called before the first frame update
-    void Start()
-    {
+    void Start(){
         character = this.transform.parent.gameObject;
     }
 
     // Update is called once per frame
-    void Update()
-    {
+    void Update() {
     	if((Cursor.lockState == CursorLockMode.Locked) && (mouseMove == true)){
 	        var md = new Vector2(Input.GetAxisRaw("Mouse X"), Input.GetAxisRaw("Mouse Y"));
 			

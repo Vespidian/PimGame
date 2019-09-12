@@ -6,8 +6,6 @@ using UnityEngine.UI;
 public class ButtonHandler : MonoBehaviour
 {
     public void quitGame() {
-    	Cursor.lockState = CursorLockMode.None;
-		Cursor.visible = true;
     	Application.Quit();
     }
     public void helpLink() {

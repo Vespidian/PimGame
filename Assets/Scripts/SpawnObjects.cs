@@ -27,16 +27,13 @@ public class SpawnObjects : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.Alpha1)){
         	randomizeSpawn();
         	Instantiate(prefab1, spawnPoint, Quaternion.identity);
-        }
-        if(Input.GetKeyDown(KeyCode.Alpha2)){
+        }else if(Input.GetKeyDown(KeyCode.Alpha2)){
         	randomizeSpawn();
         	Instantiate(prefab2, spawnPoint, Quaternion.identity);
-        }
-        if(Input.GetKeyDown(KeyCode.Alpha3)){
+        }else if(Input.GetKeyDown(KeyCode.Alpha3)){
         	randomizeSpawn();
         	Instantiate(prefab3, spawnPoint, Quaternion.identity);
-        }
-        if(Input.GetKeyDown(KeyCode.Alpha4)){
+        }else if(Input.GetKeyDown(KeyCode.Alpha4)){
         	randomizeSpawn();
         	Instantiate(prefab4, spawnPoint, Quaternion.identity);
         }
