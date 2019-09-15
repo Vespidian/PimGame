@@ -8,7 +8,7 @@ public class KeyPresses : MonoBehaviour
 {
 
 	public bool cursorIsLockable = true;
-	private GameObject helpButton;
+	private GameObject buttons;
 	private GameObject crosshair;
 	private bool locked = true;
 
@@ -19,12 +19,12 @@ public class KeyPresses : MonoBehaviour
     {
     	cameraVars = GameObject.Find("Camera").GetComponent<CamMouseLook>();
 
-    	helpButton = GameObject.Find("helpButton");
+    	buttons = GameObject.Find("buttons");
     	crosshair = GameObject.Find("crosshair");
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
-        helpButton.SetActive(false);
+        buttons.SetActive(false);
         crosshair.SetActive(true);
     }
 
@@ -49,28 +49,28 @@ public class KeyPresses : MonoBehaviour
 	    	if(Input.GetKeyDown("escape")){
 	    		if(locked == true){
 				   	unFocused();
-				 	locked = false;
 			    }else if(locked == false){
 				   	focused();
-		        	locked = true;
 			    }
 		    }
     	}
     }
-    void focused() {
+    public void focused() {
     	cameraVars.mouseMove = true;
 		Cursor.lockState = CursorLockMode.Locked;
 	  	Cursor.visible = false;
-	 	helpButton.SetActive(false);
+	 	buttons.SetActive(false);
 		crosshair.SetActive(true);
-    	Debug.Log("focused");
+		locked = true;
+    	//Debug.Log("focused");
     }
     void unFocused() {
     	cameraVars.mouseMove = false;
 		Cursor.lockState = CursorLockMode.None;
 	  	Cursor.visible = true;
-	 	helpButton.SetActive(true);
+	 	buttons.SetActive(true);
 		crosshair.SetActive(false);
-		Debug.Log("unfocused");
+		locked = false;
+		//Debug.Log("unfocused");
     }
 }

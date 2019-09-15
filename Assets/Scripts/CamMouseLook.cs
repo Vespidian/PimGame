@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CamMouseLook : MonoBehaviour
 {
@@ -9,7 +10,8 @@ public class CamMouseLook : MonoBehaviour
 	public float sensitivity = 5.0f;
 	public float smoothing = 2.0f;
 	public bool mouseMove = true;
-	
+	public Text FPS;
+
 	GameObject character;
 	
     // Start is called before the first frame update
@@ -31,5 +33,8 @@ public class CamMouseLook : MonoBehaviour
 			transform.localRotation = Quaternion.AngleAxis(-mouseLook.y, Vector3.right);
 			character.transform.localRotation = Quaternion.AngleAxis(mouseLook.x, character.transform.up);
 		}
+
+		FPS.text = (1f / Time.unscaledDeltaTime).ToString();
+
 	}
 }

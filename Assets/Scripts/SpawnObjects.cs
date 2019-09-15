@@ -5,7 +5,7 @@ using UnityEngine;
 public class SpawnObjects : MonoBehaviour
 {
 
-	public DontFall respawn;
+	private DontFall respawn;
 
 	public GameObject prefab1;
 	public GameObject prefab2;

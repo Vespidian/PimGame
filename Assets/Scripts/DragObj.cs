@@ -29,7 +29,7 @@ public class DragObj : MonoBehaviour
     	thePlayer = GameObject.Find("Player").GetComponent<Character_Controller>();
     	cameraVars = GameObject.Find("Camera").GetComponent<CamMouseLook>();
 
-        objRb = this.gameObject.GetComponent<Rigidbody>();
+        objRb = gameObject.GetComponent<Rigidbody>();
     }
 
     void OnMouseDown() {
