@@ -4,6 +4,7 @@
 + Shift to sprint
 + Control to crouch
 + Number keys to spawn objects
++ Z to zoom
 + R to reset the scene
 + Escape to pause / show menu
 #### Press c to enable flight
