@@ -124,8 +124,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dragSpeed: 20
-  thePlayer: {fileID: 0}
-  playerTools: {fileID: 0}
+  allowDelete: 1
 --- !u!114 &483553691301138749
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -141,4 +140,3 @@ MonoBehaviour:
   types: 1
   spawnHeight: 100
   lowestPossiblePoint: -10
-  spawnPoint: {x: 0, y: 10, z: 0}

@@ -21,8 +21,8 @@ public class StartScreen : MonoBehaviour
     }
     public void cycleSplash(){
         enableSplash();
-        Invoke("disableSplash", 1);
-        //disableSplash();
+        //Invoke("disableSplash", 1);
+        disableSplash();
     }
     void enableSplash(){
         cameraVars.mouseMove = false;

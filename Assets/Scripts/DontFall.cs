@@ -10,15 +10,16 @@ public class DontFall : MonoBehaviour
 	public float spawnHeight = 100;
 	public float lowestPossiblePoint = -10;
 	Rigidbody rb;
-	private SpawnObjects rando;
-	public Vector3 spawnPoint = new Vector3(0, 10, 0);
+	private Character_Controller thePlayer;
+	private Vector3 spawnPoint = new Vector3(0, 20, 0);
 
     // Start is called before the first frame update
     void Start()
     {
         rb = gameObject.GetComponent<Rigidbody>();
-        rando = GameObject.Find("Player").GetComponent<SpawnObjects>();
+        thePlayer = GameObject.Find("Player").GetComponent<Character_Controller>();
 
+        spawnPoint = thePlayer.objSpwnPoint;
     }
 
     // Update is called once per frame
@@ -31,11 +32,15 @@ public class DontFall : MonoBehaviour
 
         	}else if(types == RespawnTypes.RespawnPoint) {
 
-        		rando.randomizeSpawn();
-        		spawnPoint = new Vector3(rando.spawnPoint.x, 10, rando.spawnPoint.z);
+        		RandoSpawn();
+        		spawnPoint = new Vector3(spawnPoint.x, spawnPoint.y, spawnPoint.z);
         		rb.velocity = new Vector3(0, 0, 0);
 	   			gameObject.transform.position = spawnPoint;
 	   		}
 	    }
+    }
+    void RandoSpawn() {
+	    spawnPoint.x = Random.Range(-thePlayer.objSpawnRange, thePlayer.objSpawnRange);
+	    spawnPoint.z = Random.Range(-thePlayer.objSpawnRange, thePlayer.objSpawnRange);
     }
 }
