@@ -111,6 +111,7 @@ public class Weapons : MonoBehaviour
                 if(weldObj0 != weldObj1){
                     joint = weldObj0.AddComponent<FixedJoint>();
                     joint.connectedBody = weldObj1.GetComponent<Rigidbody>();
+                    //if(weldObj0.GetComponent<FixedJoint>().connectedBody.gameObject.GetComponent<FixedJoint>().connectedBody.gameObject.GetComponent<Rigidbody>() != weldObj1.GetComponent<Rigidbody>()){}
                 }
             }
         }

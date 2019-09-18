@@ -104,9 +104,15 @@ public class DragObj : MonoBehaviour
 				objRotation += mousePos;
 
 				rot = Quaternion.Euler(startRot.x + objRotation.x, startRot.y + -objRotation.y, startRot.z);
-				startRot = Quaternion.Euler(startRot.x + objRotation.x, startRot.y + -objRotation.y, startRot.z);
+				//startRot = Quaternion.Euler(startRot.x + objRotation.x, startRot.y + -objRotation.y, startRot.z);
+
+
 				transform.RotateAround(transform.position, GameObject.Find("Camera").transform.right, mousePos.y);
 				transform.RotateAround(transform.position, GameObject.Find("Camera").transform.up, -mousePos.x);
+
+
+				//objRb.AddTorque(GameObject.Find("Camera").transform.up * -mousePos.x);
+				//objRb.AddTorque(GameObject.Find("Camera").transform.right * mousePos.y);
 			}else if(Input.GetKeyUp(KeyCode.E))
 			{
 				cameraVars.mouseMove = true;
@@ -159,9 +165,9 @@ public class DragObj : MonoBehaviour
 		
 		objRb.velocity = (thePlayer.destPoint.position - this.transform.position) * dragSpeed;
 
-		objRb.AddTorque((Vector3.right * (startRot.x - transform.rotation.x)) * 100);
+		/*objRb.AddTorque((Vector3.right * (startRot.x - transform.rotation.x)) * 100);
 		objRb.AddTorque((Vector3.up * (startRot.y - transform.rotation.y)) * 100);
-		objRb.AddTorque((Vector3.forward * (startRot.z - transform.rotation.z)) * 100);
+		objRb.AddTorque((Vector3.forward * (startRot.z - transform.rotation.z)) * 100);*/
 
 		//raycastLocal = thePlayer.staticHit.transform.InverseTransformPoint(this.transform.position);
 		//objRb.velocity = ((thePlayer.destPoint.position) - (raycastLocal));// * dragSpeed;
