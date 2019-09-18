@@ -23,3 +23,6 @@
 ### Delete Tool
 + Left click to delete continuously
 + Right click to delete single objects
+### Weld Tool
++ Left click 2 objects to weld them together
++ Right click any welded object to release the weld
