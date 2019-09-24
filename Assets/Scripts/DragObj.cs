@@ -19,9 +19,13 @@ public class DragObj : MonoBehaviour
 	Vector2 objRotation;
 	public float dragSpeed = 20;
 	public bool allowDelete = false;
+	public bool allowWeld = true;
+	public bool allowDragging = true;
+
 	private bool stopRotation = false;
 	private bool freezeObject = false;
 	private bool toggleHold = false;
+	private Vector3 upLift;
 
 	private Character_Controller thePlayer;
 	private Weapons playerTools;
@@ -35,6 +39,7 @@ public class DragObj : MonoBehaviour
     	cameraVars = GameObject.Find("Camera").GetComponent<CamMouseLook>();
 
         objRb = gameObject.GetComponent<Rigidbody>();
+        upLift = -Physics.gravity * (2 - objRb.velocity.y * 5);
     }
 
     void OnMouseDown() {
@@ -69,9 +74,7 @@ public class DragObj : MonoBehaviour
     	//thePlayer.destPoint.transform.localPosition = new Vector3(0, 0, thePlayer.hit.point.z);
 		raycastLocal = this.transform.position + (this.transform.position - relCastPoint);
 
-    	if(Input.GetMouseButtonDown(1)){
-    		freezeObject = true;
-    	}
+    	
     	if((Input.GetMouseButton(0)) || (Input.GetMouseButtonDown(1))){
     		if((playerTools.weapon == 3) && (allowDelete == true)){
     			Destroy(this.gameObject);
@@ -82,7 +85,7 @@ public class DragObj : MonoBehaviour
     void FixedUpdate(){
     	//Debug.Log((raycastLocal));
 
-    	if(playerTools.weapon == 1){
+    	if((playerTools.weapon == 1) && (allowDragging == true)){
 	    	if((stopRotation == true) && (freezeObject == false)){
 	    		HoldObject();
 
@@ -93,6 +96,10 @@ public class DragObj : MonoBehaviour
 	    		FreezeObject();
 	    	}
 
+
+	    	if((Input.GetMouseButtonDown(1)) && (toggleHold == true)){
+    			freezeObject = true;
+    		}
 		    if(Input.GetKeyDown(KeyCode.F)){
 		   		DynamicObject();
 		   	}
@@ -132,9 +139,16 @@ public class DragObj : MonoBehaviour
 		}
     }
 
-    void OnCollisionEnter(Collision col){
-    	if(col.gameObject.tag == "Trash"){
-    		Destroy(this.gameObject);
+    void OnTriggerStay(Collider col){
+    	if(col.gameObject.name == "Water"){
+    		objRb.AddForceAtPosition(upLift, transform.position);
+    		objRb.drag = 3;
+    		//objRb.AddForce(objRb.velocity * -1 * 1);
+    	}
+    }
+    void OnTriggerExit(Collider col) {
+    	if(col.gameObject.name == "Water"){
+    		objRb.drag = 1;
     	}
     }
 
@@ -165,9 +179,12 @@ public class DragObj : MonoBehaviour
 		
 		objRb.velocity = (thePlayer.destPoint.position - this.transform.position) * dragSpeed;
 
-		/*objRb.AddTorque((Vector3.right * (startRot.x - transform.rotation.x)) * 100);
-		objRb.AddTorque((Vector3.up * (startRot.y - transform.rotation.y)) * 100);
-		objRb.AddTorque((Vector3.forward * (startRot.z - transform.rotation.z)) * 100);*/
+		/*if(startRot != this.transform.rotation){
+			objRb.AddTorque((Vector3.right * (startRot.x - transform.rotation.x)) * 100);
+			objRb.AddTorque((Vector3.up * (startRot.y - transform.rotation.y)) * 100);
+			objRb.AddTorque((Vector3.forward * (startRot.z - transform.rotation.z)) * 100);
+			//objRb.AddTorque(startRot.up - transform.rotation.up);
+		}*/
 
 		//raycastLocal = thePlayer.staticHit.transform.InverseTransformPoint(this.transform.position);
 		//objRb.velocity = ((thePlayer.destPoint.position) - (raycastLocal));// * dragSpeed;

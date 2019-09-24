@@ -103,8 +103,8 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 358387497239033005}
   serializedVersion: 2
-  m_Mass: 5
-  m_Drag: 0
+  m_Mass: 3
+  m_Drag: 1
   m_AngularDrag: 1
   m_UseGravity: 1
   m_IsKinematic: 0
@@ -139,4 +139,3 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   types: 1
   spawnHeight: 100
-  lowestPossiblePoint: -10

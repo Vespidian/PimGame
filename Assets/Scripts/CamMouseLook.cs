@@ -11,6 +11,7 @@ public class CamMouseLook : MonoBehaviour
 	public float smoothing = 2.0f;
 	public bool mouseMove = true;
 	public Text FPS;
+	public bool zoom = false;
 
 	GameObject character;
 	
@@ -24,7 +25,12 @@ public class CamMouseLook : MonoBehaviour
     	if((Cursor.lockState == CursorLockMode.Locked) && (mouseMove == true)){
 	        var md = new Vector2(Input.GetAxisRaw("Mouse X"), Input.GetAxisRaw("Mouse Y"));
 			
-			md = Vector2.Scale(md, new Vector2(sensitivity * smoothing, sensitivity * smoothing));
+	        if(zoom == false){
+				md = Vector2.Scale(md, new Vector2(sensitivity * smoothing, sensitivity * smoothing));
+	        }else if(zoom == true){
+				md = Vector2.Scale(md, new Vector2((sensitivity / 4) * smoothing, (sensitivity / 4) * smoothing));
+	        }
+
 			smoothV.x = Mathf.Lerp(smoothV.x, md.x, 1f / smoothing);
 			smoothV.y = Mathf.Lerp(smoothV.y, md.y, 1f / smoothing);
 			mouseLook += smoothV;

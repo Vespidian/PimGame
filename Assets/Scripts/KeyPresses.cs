@@ -36,8 +36,10 @@ public class KeyPresses : MonoBehaviour
     	}
     	if(Input.GetKey(KeyCode.Z)){//Zoom in by pressing z
     		Camera.main.fieldOfView = 25;
+    		cameraVars.zoom = true;
     	}else if(Input.GetKeyUp(KeyCode.Z)){
     		Camera.main.fieldOfView = 72;
+    		cameraVars.zoom = false;
     	}
     	if(cursorIsLockable == true){
 	    	if(Input.GetMouseButtonDown(0) && (cameraVars.mouseMove == false)){

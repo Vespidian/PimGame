@@ -98,20 +98,21 @@ public class Weapons : MonoBehaviour
 
 
     void WeldObjects() {
-        if(weldObjectNum == 0){
-            if(thePlayer.hit.collider.gameObject.GetComponent<Rigidbody>() != null){
-                weldObj0 = thePlayer.hit.collider.gameObject;
-                weldObjectNum = 1;
-            }
-        }else if(weldObjectNum == 1) {
-            if(thePlayer.hit.collider.gameObject.GetComponent<Rigidbody>() != null){
-                weldObj1 = thePlayer.hit.collider.gameObject;
-                weldObjectNum = 0;
+        if(thePlayer.hit.collider.gameObject.GetComponent<DragObj>().allowWeld == true){
+            if(weldObjectNum == 0){//Selecting first object
+                if(thePlayer.hit.collider.gameObject.GetComponent<Rigidbody>() != null){
+                    weldObj0 = thePlayer.hit.collider.gameObject;
+                    weldObjectNum = 1;
+                }
+            }else if(weldObjectNum == 1) {//Selecting second object
+                if(thePlayer.hit.collider.gameObject.GetComponent<Rigidbody>() != null){
+                    weldObj1 = thePlayer.hit.collider.gameObject;
+                    weldObjectNum = 0;
 
-                if(weldObj0 != weldObj1){
-                    joint = weldObj0.AddComponent<FixedJoint>();
-                    joint.connectedBody = weldObj1.GetComponent<Rigidbody>();
-                    //if(weldObj0.GetComponent<FixedJoint>().connectedBody.gameObject.GetComponent<FixedJoint>().connectedBody.gameObject.GetComponent<Rigidbody>() != weldObj1.GetComponent<Rigidbody>()){}
+                    if(weldObj0 != weldObj1){
+                        joint = weldObj0.AddComponent<FixedJoint>();
+                        joint.connectedBody = weldObj1.GetComponent<Rigidbody>();
+                    }
                 }
             }
         }

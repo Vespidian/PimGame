@@ -5,6 +5,8 @@ using UnityEngine;
 public class Character_Controller : MonoBehaviour
 {
 	Rigidbody rb;
+	LineRenderer line;
+	private Vector3 lineDistance;
 
 	Vector3 direction;
 
@@ -34,12 +36,13 @@ public class Character_Controller : MonoBehaviour
 	public Vector3 objSpwnPoint = new Vector3(0, 20, 0);
 
 	public bool rayHitting = false;
+	private Vector3 upLift;
 
 	private CamMouseLook cameraVars;
 
 	float translation;
 	float strafe;
-	
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -48,7 +51,12 @@ public class Character_Controller : MonoBehaviour
 
     	walkType = 0;
 		rb = this.gameObject.GetComponent<Rigidbody>();
+		line = GameObject.Find("Arms").GetComponent<LineRenderer>();
 		Application.targetFrameRate = 70;
+		upLift = -Physics.gravity * (2 - rb.velocity.y * 5);
+
+		line.SetPosition(0, Vector3.zero);
+
     }
 
     // Update is called once per frame
@@ -63,9 +71,15 @@ public class Character_Controller : MonoBehaviour
 	    	if(Input.GetKey(KeyCode.LeftControl)){
 	    		walkType = 2;
 	    		GameObject.Find("Camera").transform.localPosition = new Vector3(0, 0, 0);
+
+	    		GetComponent<CapsuleCollider>().height = 2;
+	    		GetComponent<CapsuleCollider>().center = new Vector3(0, -0.5f, 0);
 	    	}else if(Input.GetKeyUp(KeyCode.LeftControl)){
 	    		walkType = 0;
 	    		GameObject.Find("Camera").transform.localPosition = new Vector3(0, 1, 0);
+
+	    		GetComponent<CapsuleCollider>().height = 3;
+	    		GetComponent<CapsuleCollider>().center = new Vector3(0, 0, 0);
 	    	}
 
 	    	if(Input.GetKeyDown(KeyCode.Space)){
@@ -85,11 +99,14 @@ public class Character_Controller : MonoBehaviour
 	    		}
 	    	}
     	}
-    	if(gameObject.transform.position.y <= -20){
+    	if(gameObject.transform.position.y <= -30){
 	        spawnPoint = new Vector3(spawnPoint.x, spawnPoint.y, spawnPoint.z);
 	        rb.velocity = new Vector3(0, 0, 0);
 		   	gameObject.transform.position = spawnPoint;
 		}
+
+
+    	
     }
 
     void FixedUpdate() {
@@ -142,8 +159,19 @@ public class Character_Controller : MonoBehaviour
 		    if (Physics.Raycast(GameObject.Find("Camera").transform.position, GameObject.Find("Camera").transform.forward, out hit, Mathf.Infinity)){
 		    	rayHitting = true;
 		   		Debug.DrawRay(GameObject.Find("Camera").transform.position, GameObject.Find("Camera").transform.forward * hit.distance, Color.red);
+		   		
+		   		if(Input.GetMouseButton(0)){
+			   		line.SetPosition(1, GameObject.Find("Arms").transform.InverseTransformPoint(hit.point));
+			   		lineDistance = GameObject.Find("Arms").transform.InverseTransformPoint(hit.point);
+		   		}else{
+		   			line.SetPosition(1, Vector3.zero);
+		   		}
 		   	}else{
 		   		rayHitting = false;
+		   		if(Input.GetMouseButtonUp(0)){
+		   			line.SetPosition(1, Vector3.zero);
+		   		}
+
 		   	}
 			if(Input.GetMouseButtonDown(0)){
 				Physics.Raycast(GameObject.Find("Camera").transform.position, GameObject.Find("Camera").transform.forward, out staticHit, Mathf.Infinity);
@@ -164,6 +192,13 @@ public class Character_Controller : MonoBehaviour
     		rb.useGravity = false;
     	}else if (flying == false){
     		rb.useGravity = true;
+    	}
+    }
+
+
+    void OnTriggerStay(Collider col){
+    	if(col.gameObject.name == "Water"){
+    		rb.AddForceAtPosition(upLift, transform.position);
     	}
     }
 }

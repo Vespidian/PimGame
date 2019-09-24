@@ -14,6 +14,7 @@ public class SpawnObjects : MonoBehaviour
 	public Vector3 spawnPoint = new Vector3(0, 10, 0);
 	public int coordRange = 5;
 	private Character_Controller thePlayer;
+	public int lowestPossiblePoint = -30;
 
 
     // Start is called before the first frame update
