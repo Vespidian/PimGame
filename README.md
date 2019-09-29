@@ -1,25 +1,25 @@
 # PimGame
 
 ## Controls
-+ Shift to sprint
-+ Control to crouch
++ <kbd>Shift</kbd> to sprint
++ <kbd>Control</kbd> to crouch
 + Number keys to spawn objects
-+ Z to zoom
-+ R to reset the scene
-+ Escape to pause / show menu
-#### Press c to enable flight
-+ Control moves you down
-+ Space moves you down
++ <kbd>Z</kbd> to zoom
++ <kbd>R</kbd> to reset the scene
++ <kbd>Escape</kbd> to pause / show menu
+#### Press <kbd>c</kbd> to enable flight
++ <kbd>Control</kbd> moves you down
++ <kbd>Space</kbd> moves you down
 
 ## Menus
 ### Item Spawn Menu
-+ Press and hold Q to open the **Spawn Item Menu** and click on an item to spawn it.
++ Press and hold <kbd>Q</kbd> to open the **Spawn Item Menu** and click on an item to spawn it.
 
 ## Tools / Weapons List
 ### Physics Gun
 + Used by clicking and dragging.
-+ F unfreezes all objects
-+ E to rotate held object
++ <kbd>F</kbd> unfreezes all objects
++ <kbd>E</kbd> to rotate held object
 + Right click to freeze item in place, and release click to let go of object.
 ### Impulse Gun
 + Used to add a sudden force onto objects in the direction you are looking.
