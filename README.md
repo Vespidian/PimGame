@@ -11,6 +11,10 @@
 + Control moves you down
 + Space moves you down
 
+## Menus
+### Item Spawn Menu
++ Press and hold Q to open the **Spawn Item Menu** and click on an item to spawn it.
+
 ## Tools / Weapons List
 ### Physics Gun
 + Used by clicking and dragging.
