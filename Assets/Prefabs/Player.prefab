@@ -497,6 +497,8 @@ MonoBehaviour:
   objSpawnRange: 5
   objSpwnPoint: {x: 0, y: 20, z: 0}
   rayHitting: 0
+  smokeParticle: {fileID: 5713719400332742403, guid: 345c24c0c3ed2174d9f37b8b4e9b8a53,
+    type: 3}
 --- !u!114 &5052117450538018865
 MonoBehaviour:
   m_ObjectHideFlags: 0

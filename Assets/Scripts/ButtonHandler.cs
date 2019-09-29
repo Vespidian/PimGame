@@ -7,20 +7,24 @@ using UnityEngine.SceneManagement;
 public class ButtonHandler : MonoBehaviour
 {
 
-	public StartScreen startBack;
+	private StartScreen startBack;
 
-	void start() {
+	void Start() {
 		startBack = GameObject.Find("EventSystem").GetComponent<StartScreen>();
+		//startBack.disableSplash();
 	}
 
     public void quitGame() {
     	Application.Quit();
     }
     public void startGame() {
-    	SceneManager.LoadScene("SampleScene");
-    	Invoke("startBack.cycleSplash", 1);
-    	//startBack.cycleSplash();
+    	startBack.enableSplash();
+    	Invoke("loadInitialScene", 1);
     }
+    void loadInitialScene() {
+    	SceneManager.LoadScene("SampleScene");
+    }
+
     public void startMenu() {
     	SceneManager.LoadScene("StartMenu");
     }

@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: brick
-  m_Shader: {fileID: 4800000, guid: 4d0871eebd1e2f24bbcf85d087361ac4, type: 3}
+  m_Shader: {fileID: 4800000, guid: 57a70ab6f5c9be745a08de59ddf8bfcb, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -28,7 +28,15 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 591b137d6c9bd01479213e3153d94faa, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MainTexSide:
+        m_Texture: {fileID: 2800000, guid: 591b137d6c9bd01479213e3153d94faa, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Normal:
+        m_Texture: {fileID: 2800000, guid: bb467f89e4832524c8dcb2d9bc4d7400, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Normal0:
@@ -44,6 +52,10 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Normal3:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Ramp:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -86,14 +98,18 @@ Material:
     m_Floats:
     - _BottomScale: 0.6
     - _BumpScale: 1
+    - _EdgeWidth: 1
+    - _NoiseScale: 1
     - _RimMultiplier: 0.2
     - _RimPower: 5
-    - _Scale: 0.2
-    - _SideScale: 0.6
+    - _Scale: 0.4
+    - _SideScale: 0.4
     - _TexPower: 10
     - _TopScale: 0.6
+    - _TopSpread: 1
     - _UVFreeRim: 0
     - _UVScale: 100
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _RimColor: {r: 1, g: 1, b: 1, a: 1}
+    - _RimColor: {r: 0, g: 0, b: 0, a: 1}
+    - _RimColor2: {r: 0, g: 0, b: 0, a: 1}

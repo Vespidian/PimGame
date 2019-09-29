@@ -10,22 +10,24 @@ public class KeyPresses : MonoBehaviour
 	public bool cursorIsLockable = true;
 	private GameObject buttons;
 	private GameObject crosshair;
+	private GameObject spawnSelection;
 	private bool locked = true;
 
 	private CamMouseLook cameraVars;
+	private Character_Controller thePlayer;
 
     // Start is called before the first frame update
     void Start()
     {
     	cameraVars = GameObject.Find("Camera").GetComponent<CamMouseLook>();
+		thePlayer = GameObject.Find("Player").GetComponent<Character_Controller>();
+
 
     	buttons = GameObject.Find("buttons");
     	crosshair = GameObject.Find("crosshair");
+    	spawnSelection = GameObject.Find("SpawnSelect");
 
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
-        buttons.SetActive(false);
-        crosshair.SetActive(true);
+    	DefaultUIState();
     }
 
     // Update is called once per frame
@@ -44,35 +46,60 @@ public class KeyPresses : MonoBehaviour
     	if(cursorIsLockable == true){
 	    	if(Input.GetMouseButtonDown(0) && (cameraVars.mouseMove == false)){
 	    		if(!EventSystem.current.IsPointerOverGameObject()){
-		    		focused();
-		        	locked = true;
+	    			UnPauseGame();
 	        	}
 	    	}
 	    	if(Input.GetKeyDown("escape")){
 	    		if(locked == true){
-				   	unFocused();
+				   	PauseGame();
 			    }else if(locked == false){
-				   	focused();
+				   	UnPauseGame();
 			    }
+		    }
+
+		    if(Input.GetKey(KeyCode.Q)){
+		    	spawnSelection.SetActive(true);
+		    	UnFocusMouse();
+		    }else if(Input.GetKeyUp(KeyCode.Q)){
+		    	spawnSelection.SetActive(false);
+		    	FocusMouse();
 		    }
     	}
     }
-    public void focused() {
-    	cameraVars.mouseMove = true;
-		Cursor.lockState = CursorLockMode.Locked;
-	  	Cursor.visible = false;
-	 	buttons.SetActive(false);
-		crosshair.SetActive(true);
-		locked = true;
-    	//Debug.Log("focused");
+
+    void PauseGame(){
+    	buttons.SetActive(true);
+		crosshair.SetActive(false);
+		thePlayer.pauseGame = true;
+		UnFocusMouse();
     }
-    void unFocused() {
+    void UnPauseGame(){
+    	buttons.SetActive(false);
+		crosshair.SetActive(true);
+		thePlayer.pauseGame = false;
+		FocusMouse();
+    }
+
+    void UnFocusMouse(){
     	cameraVars.mouseMove = false;
 		Cursor.lockState = CursorLockMode.None;
 	  	Cursor.visible = true;
-	 	buttons.SetActive(true);
-		crosshair.SetActive(false);
+	  	thePlayer.allowTools = false;
 		locked = false;
-		//Debug.Log("unfocused");
+    }
+    void FocusMouse(){
+    	cameraVars.mouseMove = true;
+		Cursor.lockState = CursorLockMode.Locked;
+	  	Cursor.visible = false;
+	  	thePlayer.allowTools = true;
+		locked = true;
+    }
+
+    void DefaultUIState(){
+    	Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+        buttons.SetActive(false);
+        crosshair.SetActive(true);
+        spawnSelection.SetActive(false);
     }
 }

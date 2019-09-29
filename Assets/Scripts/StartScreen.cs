@@ -2,40 +2,34 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class StartScreen : MonoBehaviour
 {
 
-	public RawImage image;
-	public RawImage background;
-	public Text text;
     private CamMouseLook cameraVars;
 
+
+    public GameObject startScreen;
 
     // Start is called before the first frame update
     void Start()
     {
-        cameraVars = GameObject.Find("Camera").GetComponent<CamMouseLook>();
-        
-        cycleSplash();
+
     }
     public void cycleSplash(){
         enableSplash();
         Invoke("disableSplash", 1);
-        //disableSplash();
     }
-    void enableSplash(){
-        cameraVars.mouseMove = false;
-        image.enabled = true;
-        background.enabled = true;
-        text.enabled = true;
+    
+    public void enableSplash(){
+        startScreen.SetActive(true);
+        Debug.Log("enable splash");
     }
 
-    void disableSplash(){
-        cameraVars.mouseMove = true;
-    	image.enabled = false;
-    	background.enabled = false;
-    	text.enabled = false;
+    public void disableSplash(){
+        startScreen.SetActive(false);
+        Debug.Log("Disable splash");
     }
     void Update() {
 

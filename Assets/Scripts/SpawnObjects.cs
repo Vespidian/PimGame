@@ -5,7 +5,7 @@ using UnityEngine;
 public class SpawnObjects : MonoBehaviour
 {
 
-	private DontFall respawn;
+	//private DontFall respawn;
 
 	public GameObject prefab1;
 	public GameObject prefab2;
@@ -14,20 +14,18 @@ public class SpawnObjects : MonoBehaviour
 	public Vector3 spawnPoint = new Vector3(0, 10, 0);
 	public int coordRange = 5;
 	private Character_Controller thePlayer;
-	public int lowestPossiblePoint = -30;
-
 
     // Start is called before the first frame update
     void Start()
     {
     	thePlayer = GameObject.Find("Player").GetComponent<Character_Controller>();
-    	respawn = GameObject.Find("Player").GetComponent<DontFall>();   
+    	//respawn = GameObject.Find("Player").GetComponent<DontFall>();   
     }
 
     // Update is called once per frame
     void Update()
     {
-    	if(thePlayer.rayHitting == true){
+    	/*if(thePlayer.rayHitting == true){
 	    	
 	        if(Input.GetKeyDown(KeyCode.Alpha1)){
 	        	randomizeSpawn();
@@ -42,11 +40,28 @@ public class SpawnObjects : MonoBehaviour
 	        	randomizeSpawn();
 	        	Instantiate(prefab4, spawnPoint, Quaternion.identity);
 	        }
-    	}
+    	}*/
     }
     public void randomizeSpawn() {
     	spawnPoint.x = Random.Range(-coordRange, coordRange);
 	    spawnPoint.z = Random.Range(-coordRange, coordRange);
         spawnPoint = thePlayer.hit.point + new Vector3(spawnPoint.x, 1, spawnPoint.z);
+    }
+
+    public void SpawnPrefab1(){
+    	randomizeSpawn();
+	    Instantiate(prefab1, spawnPoint, Quaternion.identity);
+    }
+    public void SpawnPrefab2(){
+    	randomizeSpawn();
+	    Instantiate(prefab2, spawnPoint, Quaternion.identity);
+    }
+    public void SpawnPrefab3(){
+    	randomizeSpawn();
+	    Instantiate(prefab3, spawnPoint, Quaternion.identity);
+    }
+    public void SpawnPrefab4(){
+    	randomizeSpawn();
+	    Instantiate(prefab4, spawnPoint, Quaternion.identity);
     }
 }

@@ -8,7 +8,7 @@ public class DontFall : MonoBehaviour
 	public enum RespawnTypes { FallForever = 0, RespawnPoint = 1};
 	public RespawnTypes types = RespawnTypes.RespawnPoint;
 	public float spawnHeight = 100;
-	Rigidbody rb;
+	private Rigidbody rb;
 	private Character_Controller thePlayer;
 	private SpawnObjects spawner;
 	private Vector3 spawnPoint = new Vector3(0, 20, 0);
@@ -18,7 +18,6 @@ public class DontFall : MonoBehaviour
     {
         rb = gameObject.GetComponent<Rigidbody>();
         thePlayer = GameObject.Find("Player").GetComponent<Character_Controller>();
-        spawner = GameObject.Find("Player").GetComponent<SpawnObjects>();
 
         spawnPoint = thePlayer.objSpwnPoint;
     }
@@ -26,7 +25,7 @@ public class DontFall : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(gameObject.transform.position.y <= spawner.lowestPossiblePoint){
+        if(gameObject.transform.position.y <= thePlayer.lowestPossiblePoint){
         	if(types == RespawnTypes.FallForever){
 
 	   			gameObject.transform.position = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y+spawnHeight, gameObject.transform.position.z);

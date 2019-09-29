@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class ButtonScript : MonoBehaviour
 {
-	enum ButtonType {increaseVar, decreaseVar}
+	//enum ButtonType {increaseVar, decreaseVar}
 
 
 
     // Start is called before the first frame update
     void Start()
     {
-        ButtonType buttonType;
+        //ButtonType buttonType;
     }
 
     // Update is called once per frame

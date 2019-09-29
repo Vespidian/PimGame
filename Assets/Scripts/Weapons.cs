@@ -8,12 +8,12 @@ public class Weapons : MonoBehaviour
 	public bool changingWeapon = true;
 	public int weapon = 1;
 	private int numOfWeapons = 4;
-	Text weaponText;
+	private Text weaponText;
 
-    GameObject weldObj0;
-    GameObject weldObj1;
+    private GameObject weldObj0;
+    private GameObject weldObj1;
     private int weldObjectNum;
-    FixedJoint joint;
+    private FixedJoint joint;
 
     private Character_Controller thePlayer;
 

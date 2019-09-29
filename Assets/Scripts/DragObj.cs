@@ -12,6 +12,7 @@ public class DragObj : MonoBehaviour
 	Vector3 raycastLocal;
 	Vector3 relCastPoint;
 
+	Vector3 pauseVelocity;
 	Vector3 dragObjRel;
 	Vector3 playerDirection;
 	Vector2 mousePos;
@@ -29,7 +30,7 @@ public class DragObj : MonoBehaviour
 
 	private Character_Controller thePlayer;
 	private Weapons playerTools;
-	private CamMouseLook cameraVars; 
+	private CamMouseLook cameraVars;
 
     // Start is called before the first frame update
     void Start()
@@ -83,56 +84,58 @@ public class DragObj : MonoBehaviour
     }
 
     void FixedUpdate(){
-    	//Debug.Log((raycastLocal));
+    	if(thePlayer.allowTools == true){
+	    	if((playerTools.weapon == 1) && (allowDragging == true)){
+		    	if((stopRotation == true) && (freezeObject == false)){
+		    		HoldObject();
 
-    	if((playerTools.weapon == 1) && (allowDragging == true)){
-	    	if((stopRotation == true) && (freezeObject == false)){
-	    		HoldObject();
+		    	}else if((stopRotation == false) && (freezeObject == false)){
+		    		if(cameraVars.mouseMove == true){
+			   			DynamicObject();
+			   		}
 
-	    	}else if((stopRotation == false) && (freezeObject == false)){
-		   		DynamicObject();
-
-		    }else if(freezeObject == true){
-	    		FreezeObject();
-	    	}
-
-
-	    	if((Input.GetMouseButtonDown(1)) && (toggleHold == true)){
-    			freezeObject = true;
-    		}
-		    if(Input.GetKeyDown(KeyCode.F)){
-		   		DynamicObject();
-		   	}
-
-		   	scrollDestination();
-			if((Input.GetKey(KeyCode.E)) && (toggleHold == true)){
-				cameraVars.mouseMove = false;
-				mousePos = new Vector2(Input.GetAxisRaw("Mouse X"), Input.GetAxisRaw("Mouse Y"));
-				objRotation += mousePos;
-
-				rot = Quaternion.Euler(startRot.x + objRotation.x, startRot.y + -objRotation.y, startRot.z);
-				//startRot = Quaternion.Euler(startRot.x + objRotation.x, startRot.y + -objRotation.y, startRot.z);
+			    }else if(freezeObject == true){
+		    		FreezeObject();
+		    	}
 
 
-				transform.RotateAround(transform.position, GameObject.Find("Camera").transform.right, mousePos.y);
-				transform.RotateAround(transform.position, GameObject.Find("Camera").transform.up, -mousePos.x);
+		    	if((Input.GetMouseButtonDown(1)) && (toggleHold == true)){
+	    			freezeObject = true;
+	    		}
+			    if(Input.GetKeyDown(KeyCode.F)){
+			   		DynamicObject();
+			   	}
+
+			   	scrollDestination();
+				if((Input.GetKey(KeyCode.E)) && (toggleHold == true)){
+					cameraVars.mouseMove = false;
+					mousePos = new Vector2(Input.GetAxisRaw("Mouse X"), Input.GetAxisRaw("Mouse Y"));
+					objRotation += mousePos;
+
+					rot = Quaternion.Euler(startRot.x + objRotation.x, startRot.y + -objRotation.y, startRot.z);
+					//startRot = Quaternion.Euler(startRot.x + objRotation.x, startRot.y + -objRotation.y, startRot.z);
 
 
-				//objRb.AddTorque(GameObject.Find("Camera").transform.up * -mousePos.x);
-				//objRb.AddTorque(GameObject.Find("Camera").transform.right * mousePos.y);
-			}else if(Input.GetKeyUp(KeyCode.E))
-			{
-				cameraVars.mouseMove = true;
+					transform.RotateAround(transform.position, GameObject.Find("Camera").transform.right, mousePos.y);
+					transform.RotateAround(transform.position, GameObject.Find("Camera").transform.up, -mousePos.x);
+
+
+					//objRb.AddTorque(GameObject.Find("Camera").transform.up * -mousePos.x);
+					//objRb.AddTorque(GameObject.Find("Camera").transform.right * mousePos.y);
+				}else if(Input.GetKeyUp(KeyCode.E))
+				{
+					cameraVars.mouseMove = true;
+				}
+				if(Input.GetMouseButton(0)){
+
+	         	}
 			}
-			if(Input.GetMouseButton(0)){
-
-         	}
-		}
-		if(playerTools.weapon == 4){
-			if(gameObject.GetComponent<FixedJoint>() != null){
-				if(thePlayer.hit.collider == gameObject.GetComponent<FixedJoint>().connectedBody.gameObject.GetComponent<Collider>()){
-					if(Input.GetMouseButtonDown(1)){
-						Destroy(gameObject.GetComponent<FixedJoint>());
+			if(playerTools.weapon == 4){
+				if(gameObject.GetComponent<FixedJoint>() != null){
+					if(thePlayer.hit.collider == gameObject.GetComponent<FixedJoint>().connectedBody.gameObject.GetComponent<Collider>()){
+						if(Input.GetMouseButtonDown(1)){
+							Destroy(gameObject.GetComponent<FixedJoint>());
+						}
 					}
 				}
 			}
@@ -149,6 +152,11 @@ public class DragObj : MonoBehaviour
     void OnTriggerExit(Collider col) {
     	if(col.gameObject.name == "Water"){
     		objRb.drag = 1;
+    	}
+    }
+    void OnCollisionEnter(Collision collision){
+    	if(collision.relativeVelocity.magnitude > 10){
+    		Instantiate(thePlayer.smokeParticle, new Vector3(this.transform.position.x, collision.contacts[0].point.y + 0.2f, this.transform.position.z), Quaternion.identity);
     	}
     }
 

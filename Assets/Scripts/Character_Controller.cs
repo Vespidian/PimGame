@@ -4,11 +4,10 @@ using UnityEngine;
 
 public class Character_Controller : MonoBehaviour
 {
-	Rigidbody rb;
-	LineRenderer line;
+	private Rigidbody rb;
+	private LineRenderer line;
 	private Vector3 lineDistance;
-
-	Vector3 direction;
+	private Vector3 direction;
 
 	public Vector3 spawnPoint;
 	public RaycastHit hit;
@@ -21,6 +20,8 @@ public class Character_Controller : MonoBehaviour
 	public float scrollMin = 2;
 	public float scrollMax = 60;
 	public int pokeForce = 40;
+	public bool rayHitting = false;
+	public bool allowTools = true;
 
 	[Header("Movement Settings")]
 	public float speed = 6.0f;
@@ -30,18 +31,20 @@ public class Character_Controller : MonoBehaviour
 	private int walkType;//0 = walk / 1 = sprint / 2 = crouch
 	private bool landed;
 	private bool flying = false;
+	private Vector3 upLift;
+	public bool pauseGame = false;
 
 	[Header("Object Respawn Settings")]
 	public int objSpawnRange = 5;
 	public Vector3 objSpwnPoint = new Vector3(0, 20, 0);
+	public float lowestPossiblePoint = -30;
 
-	public bool rayHitting = false;
-	private Vector3 upLift;
 
 	private CamMouseLook cameraVars;
+	public GameObject smokeParticle;
 
-	float translation;
-	float strafe;
+	private float translation;
+	private float strafe;
     
     // Start is called before the first frame update
     void Start()
@@ -61,7 +64,7 @@ public class Character_Controller : MonoBehaviour
 
     // Update is called once per frame
     void Update(){
-    	if(cameraVars.mouseMove == true){
+    	if(pauseGame == false){
 	    	if(Input.GetKey(KeyCode.LeftShift)){
 	    		walkType = 1;
 	    	}else if(Input.GetKeyUp(KeyCode.LeftShift)){
@@ -110,7 +113,8 @@ public class Character_Controller : MonoBehaviour
     }
 
     void FixedUpdate() {
-    	if(cameraVars.mouseMove == true){
+    	if(pauseGame == false){
+    		rb.isKinematic = false;
 	    	if(walkType == 0){
 				translation = Input.GetAxis("Vertical") * speed; 
 			   	strafe = Input.GetAxis("Horizontal") * speed;
@@ -177,6 +181,8 @@ public class Character_Controller : MonoBehaviour
 				Physics.Raycast(GameObject.Find("Camera").transform.position, GameObject.Find("Camera").transform.forward, out staticHit, Mathf.Infinity);
 		    	destPoint.transform.localPosition = new Vector3(0, 0, hit.distance);
 		    }
+		}else{
+			rb.isKinematic = true;
 		}
     }
 
