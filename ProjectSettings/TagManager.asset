@@ -17,10 +17,10 @@ TagManager:
   - UI
   - 
   - 
-  - 
-  - 
-  - 
-  - 
+  - StaticObject
+  - DynamicObjects
+  - PhysicsObjects
+  - NoCollide
   - 
   - 
   - 

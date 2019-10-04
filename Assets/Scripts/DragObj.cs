@@ -9,9 +9,6 @@ public class DragObj : MonoBehaviour
 
 	Rigidbody objRb;
 
-	Vector3 raycastLocal;
-	Vector3 relCastPoint;
-
 	Vector3 pauseVelocity;
 	Vector3 dragObjRel;
 	Vector3 playerDirection;
@@ -26,7 +23,10 @@ public class DragObj : MonoBehaviour
 	private bool stopRotation = false;
 	private bool freezeObject = false;
 	private bool toggleHold = false;
-	private Vector3 upLift;
+	private Vector3 buoyancyLift;
+
+	Vector3 startPosition;
+	Vector3 rayHitDifference;
 
 	private Character_Controller thePlayer;
 	private Weapons playerTools;
@@ -40,7 +40,7 @@ public class DragObj : MonoBehaviour
     	cameraVars = GameObject.Find("Camera").GetComponent<CamMouseLook>();
 
         objRb = gameObject.GetComponent<Rigidbody>();
-        upLift = -Physics.gravity * (2 - objRb.velocity.y * 5);
+        buoyancyLift = -Physics.gravity * (2 - objRb.velocity.y * 5);
     }
 
     void OnMouseDown() {
@@ -48,6 +48,11 @@ public class DragObj : MonoBehaviour
 	    	stopRotation = true;
 	    	freezeObject = false;
     		toggleHold = true;
+
+    		rayHitDifference = this.transform.InverseTransformPoint(thePlayer.staticHit.point);
+
+    		Debug.Log(rayHitDifference);
+    		Debug.Log(transform.rotation);
 
     		startRot = transform.rotation;
     		//Transforms this objects position from worldspace to the camera's localspace
@@ -70,12 +75,6 @@ public class DragObj : MonoBehaviour
 	    cameraVars.mouseMove = true;
     }
     void OnMouseOver() {
-		relCastPoint = thePlayer.destPoint.transform.position + thePlayer.staticHit.point;
-
-    	//thePlayer.destPoint.transform.localPosition = new Vector3(0, 0, thePlayer.hit.point.z);
-		raycastLocal = this.transform.position + (this.transform.position - relCastPoint);
-
-    	
     	if((Input.GetMouseButton(0)) || (Input.GetMouseButtonDown(1))){
     		if((playerTools.weapon == 3) && (allowDelete == true)){
     			Destroy(this.gameObject);
@@ -144,7 +143,7 @@ public class DragObj : MonoBehaviour
 
     void OnTriggerStay(Collider col){
     	if(col.gameObject.name == "Water"){
-    		objRb.AddForceAtPosition(upLift, transform.position);
+    		objRb.AddForceAtPosition(buoyancyLift, transform.position);
     		objRb.drag = 3;
     		//objRb.AddForce(objRb.velocity * -1 * 1);
     	}
@@ -182,7 +181,7 @@ public class DragObj : MonoBehaviour
     }
     void HoldObject() {
     	objRb.useGravity = true;
-		//objRb.freezeRotation = true;
+		objRb.freezeRotation = true;
 		objRb.isKinematic = false;
 		
 		objRb.velocity = (thePlayer.destPoint.position - this.transform.position) * dragSpeed;
@@ -194,8 +193,10 @@ public class DragObj : MonoBehaviour
 			//objRb.AddTorque(startRot.up - transform.rotation.up);
 		}*/
 
-		//raycastLocal = thePlayer.staticHit.transform.InverseTransformPoint(this.transform.position);
-		//objRb.velocity = ((thePlayer.destPoint.position) - (raycastLocal));// * dragSpeed;
+		//Debug.Log(rayHitDifference);
+
+		//objRb.velocity = (thePlayer.destPoint.position - rayHitDifference - this.transform.position) * dragSpeed;
+
     }
     void FreezeObject() {
     	objRb.useGravity = false;

@@ -11,6 +11,9 @@ public class SpawnObjects : MonoBehaviour
 	public GameObject prefab2;
 	public GameObject prefab3;
 	public GameObject prefab4;
+	public GameObject prefab5;
+	public GameObject prefab6;
+	public GameObject prefab7;
 	public Vector3 spawnPoint = new Vector3(0, 10, 0);
 	public int coordRange = 5;
 	private Character_Controller thePlayer;
@@ -64,4 +67,16 @@ public class SpawnObjects : MonoBehaviour
     	randomizeSpawn();
 	    Instantiate(prefab4, spawnPoint, Quaternion.identity);
     }
+    public void SpawnPrefab5(){
+    	randomizeSpawn();
+	    Instantiate(prefab5, spawnPoint, Quaternion.identity);
+    }
+    public void SpawnPrefab6(){
+    	randomizeSpawn();
+	    Instantiate(prefab6, spawnPoint, Quaternion.identity);
+    }
+    /*public void SpawnPrefab7(){
+    	randomizeSpawn();
+	    Instantiate(prefab7, spawnPoint, Quaternion.identity);
+    }*/
 }

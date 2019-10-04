@@ -71,12 +71,14 @@ public class KeyPresses : MonoBehaviour
     	buttons.SetActive(true);
 		crosshair.SetActive(false);
 		thePlayer.pauseGame = true;
+		Time.timeScale = 0;
 		UnFocusMouse();
     }
     void UnPauseGame(){
     	buttons.SetActive(false);
 		crosshair.SetActive(true);
 		thePlayer.pauseGame = false;
+		Time.timeScale = 1;
 		FocusMouse();
     }
 
