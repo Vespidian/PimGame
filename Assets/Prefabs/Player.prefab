@@ -490,15 +490,22 @@ MonoBehaviour:
   scrollMin: 2
   scrollMax: 500
   pokeForce: 7
+  rayHitting: 0
+  allowTools: 1
+  toggleHold: 0
   speed: 8
   sprint: 14
   crouch: 4
   jumpHeight: 7
+  pauseGame: 0
   objSpawnRange: 5
   objSpwnPoint: {x: 0, y: 20, z: 0}
-  rayHitting: 0
+  lowestPossiblePoint: -30
   smokeParticle: {fileID: 5713719400332742403, guid: 345c24c0c3ed2174d9f37b8b4e9b8a53,
     type: 3}
+  thruster: {fileID: 4311151369287526836, guid: 3d293e4d0d777c24d8b22e091b9f8c60,
+    type: 3}
+  wheel: {fileID: 4331298574844262099, guid: 4f5b73f0454aa6d448bdc42f9dd73574, type: 3}
 --- !u!114 &5052117450538018865
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -515,9 +522,11 @@ MonoBehaviour:
   prefab2: {fileID: 358387497239033005, guid: 839202276a8a6f14fa8a4065c9e3cdcc, type: 3}
   prefab3: {fileID: 2263753033829582385, guid: c0a3c3e2812d384429aba93b545d4e31, type: 3}
   prefab4: {fileID: 7329138125284509763, guid: 289a3074a8cf1954a8ba787c5e321c3b, type: 3}
+  prefab5: {fileID: 0}
+  prefab6: {fileID: 0}
+  prefab7: {fileID: 0}
   spawnPoint: {x: 0, y: 20, z: 0}
   coordRange: 5
-  lowestPossiblePoint: -30
 --- !u!114 &5052117450538020809
 MonoBehaviour:
   m_ObjectHideFlags: 0

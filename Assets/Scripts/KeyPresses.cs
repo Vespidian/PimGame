@@ -11,6 +11,7 @@ public class KeyPresses : MonoBehaviour
 	private GameObject buttons;
 	private GameObject crosshair;
 	private GameObject spawnSelection;
+	private GameObject toolSelection;
 	private bool locked = true;
 
 	private CamMouseLook cameraVars;
@@ -25,7 +26,7 @@ public class KeyPresses : MonoBehaviour
 
     	buttons = GameObject.Find("buttons");
     	crosshair = GameObject.Find("crosshair");
-    	spawnSelection = GameObject.Find("SpawnSelect");
+    	spawnSelection = GameObject.Find("ToolSelect");
 
     	DefaultUIState();
     }

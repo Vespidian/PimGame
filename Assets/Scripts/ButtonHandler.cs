@@ -8,9 +8,11 @@ public class ButtonHandler : MonoBehaviour
 {
 
 	private StartScreen startBack;
+	private Weapons playerTools;
 
 	void Start() {
 		startBack = GameObject.Find("EventSystem").GetComponent<StartScreen>();
+		playerTools = GameObject.Find("Player").GetComponent<Weapons>();
 		//startBack.disableSplash();
 	}
 
@@ -30,5 +32,18 @@ public class ButtonHandler : MonoBehaviour
     }
     public void helpLink() {
     	Application.OpenURL("https://github.com/Vespidian/Unity-Gmod-Physgun/blob/master/README.md");
+    }
+
+    public void SetToolDelete(){
+    	playerTools.weapon = 3;
+    }
+    public void SetToolWeld(){
+    	playerTools.weapon = 4;
+    }
+    public void SetToolThruster(){
+    	playerTools.weapon = 5;
+    }
+    public void SetToolWheel(){
+    	playerTools.weapon = 6;
     }
 }

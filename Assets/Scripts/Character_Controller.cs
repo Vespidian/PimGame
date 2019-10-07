@@ -22,6 +22,7 @@ public class Character_Controller : MonoBehaviour
 	public int pokeForce = 40;
 	public bool rayHitting = false;
 	public bool allowTools = true;
+	public bool toggleHold = false;
 
 	[Header("Movement Settings")]
 	public float speed = 6.0f;
@@ -39,9 +40,11 @@ public class Character_Controller : MonoBehaviour
 	public Vector3 objSpwnPoint = new Vector3(0, 20, 0);
 	public float lowestPossiblePoint = -30;
 
-
+	[Header("Misc")]
 	private CamMouseLook cameraVars;
 	public GameObject smokeParticle;
+	public GameObject thruster;
+	public GameObject wheel;
 
 	private float translation;
 	private float strafe;
@@ -101,15 +104,13 @@ public class Character_Controller : MonoBehaviour
 	    			setFlight();
 	    		}
 	    	}
+			scrollDestination();
     	}
     	if(gameObject.transform.position.y <= -30){
 	        spawnPoint = new Vector3(spawnPoint.x, spawnPoint.y, spawnPoint.z);
 	        rb.velocity = new Vector3(0, 0, 0);
 		   	gameObject.transform.position = spawnPoint;
 		}
-
-
-    	
     }
 
     void FixedUpdate() {
@@ -164,7 +165,7 @@ public class Character_Controller : MonoBehaviour
 		    	rayHitting = true;
 		   		Debug.DrawRay(GameObject.Find("Camera").transform.position, GameObject.Find("Camera").transform.forward * hit.distance, Color.red);
 		   		
-		   		if(Input.GetMouseButton(0)){
+		   		if(Input.GetMouseButton(0) && cameraVars.mouseMove == true){
 			   		line.SetPosition(1, GameObject.Find("Arms").transform.InverseTransformPoint(hit.point));
 			   		lineDistance = GameObject.Find("Arms").transform.InverseTransformPoint(hit.point);
 		   		}else{
@@ -181,8 +182,19 @@ public class Character_Controller : MonoBehaviour
 				Physics.Raycast(GameObject.Find("Camera").transform.position, GameObject.Find("Camera").transform.forward, out staticHit, Mathf.Infinity);
 		    	destPoint.transform.localPosition = new Vector3(0, 0, hit.distance);
 		    }
-		}else{
-			rb.isKinematic = true;
+		}
+    }
+
+    void scrollDestination(){
+    	if(toggleHold == true){
+	    	if(Input.GetAxis("Mouse ScrollWheel") < 0){
+			   	scrollDist -= scrollSpeed;
+			}
+		    if(Input.GetAxis("Mouse ScrollWheel") > 0){
+			   	scrollDist += scrollSpeed;
+			}
+			scrollDist = Mathf.Clamp(scrollDist, scrollMin, scrollMax);
+			destPoint.transform.localPosition = new Vector3(0, 0, scrollDist);
 		}
     }
 

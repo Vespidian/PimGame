@@ -19,10 +19,11 @@ public class DragObj : MonoBehaviour
 	public bool allowDelete = false;
 	public bool allowWeld = true;
 	public bool allowDragging = true;
+	public bool enableBuoyancy = true;
 
 	private bool stopRotation = false;
 	private bool freezeObject = false;
-	private bool toggleHold = false;
+	private bool dragging = false;
 	private Vector3 buoyancyLift;
 
 	Vector3 startPosition;
@@ -39,20 +40,25 @@ public class DragObj : MonoBehaviour
     	playerTools = GameObject.Find("Player").GetComponent<Weapons>();
     	cameraVars = GameObject.Find("Camera").GetComponent<CamMouseLook>();
 
-        objRb = gameObject.GetComponent<Rigidbody>();
-        buoyancyLift = -Physics.gravity * (2 - objRb.velocity.y * 5);
+    	if(gameObject.GetComponent<Rigidbody>() != null){
+        	objRb = gameObject.GetComponent<Rigidbody>();
+        	buoyancyLift = -Physics.gravity * (2 - objRb.velocity.y * 5);
+    	}else{
+    		allowDragging = false;
+    	}
     }
 
     void OnMouseDown() {
     	if(playerTools.weapon == 1){
 	    	stopRotation = true;
 	    	freezeObject = false;
-    		toggleHold = true;
+    		thePlayer.toggleHold = true;
+    		dragging = true;
 
     		rayHitDifference = this.transform.InverseTransformPoint(thePlayer.staticHit.point);
 
-    		Debug.Log(rayHitDifference);
-    		Debug.Log(transform.rotation);
+    		//Debug.Log(rayHitDifference);
+    		//Debug.Log(transform.rotation);
 
     		startRot = transform.rotation;
     		//Transforms this objects position from worldspace to the camera's localspace
@@ -62,24 +68,14 @@ public class DragObj : MonoBehaviour
 		   	thePlayer.destPoint.transform.localPosition = new Vector3(0, 0, dragObjRel.z);
 		   	
     	}
-    	if(playerTools.weapon == 2){
-    		ShootObject();
-    	}
-
     }
     void OnMouseUp() {
     	if(playerTools.weapon == 1){
 	    	stopRotation = false;
+	    	dragging = false;
 	    }
-	    toggleHold = false;
+	    thePlayer.toggleHold = false;
 	    cameraVars.mouseMove = true;
-    }
-    void OnMouseOver() {
-    	if((Input.GetMouseButton(0)) || (Input.GetMouseButtonDown(1))){
-    		if((playerTools.weapon == 3) && (allowDelete == true)){
-    			Destroy(this.gameObject);
-    		}
-    	}
     }
 
     void FixedUpdate(){
@@ -98,15 +94,14 @@ public class DragObj : MonoBehaviour
 		    	}
 
 
-		    	if((Input.GetMouseButtonDown(1)) && (toggleHold == true)){
+		    	if((Input.GetMouseButtonDown(1)) && (thePlayer.toggleHold == true)){
 	    			freezeObject = true;
 	    		}
 			    if(Input.GetKeyDown(KeyCode.F)){
 			   		DynamicObject();
 			   	}
 
-			   	scrollDestination();
-				if((Input.GetKey(KeyCode.E)) && (toggleHold == true)){
+				if((Input.GetKey(KeyCode.E)) && (thePlayer.toggleHold == true) && (dragging == true)) {
 					cameraVars.mouseMove = false;
 					mousePos = new Vector2(Input.GetAxisRaw("Mouse X"), Input.GetAxisRaw("Mouse Y"));
 					objRotation += mousePos;
@@ -115,8 +110,8 @@ public class DragObj : MonoBehaviour
 					//startRot = Quaternion.Euler(startRot.x + objRotation.x, startRot.y + -objRotation.y, startRot.z);
 
 
-					transform.RotateAround(transform.position, GameObject.Find("Camera").transform.right, mousePos.y);
-					transform.RotateAround(transform.position, GameObject.Find("Camera").transform.up, -mousePos.x);
+					this.transform.RotateAround(transform.position, GameObject.Find("Camera").transform.right, mousePos.y);
+					this.transform.RotateAround(transform.position, GameObject.Find("Camera").transform.up, -mousePos.x);
 
 
 					//objRb.AddTorque(GameObject.Find("Camera").transform.up * -mousePos.x);
@@ -125,14 +120,11 @@ public class DragObj : MonoBehaviour
 				{
 					cameraVars.mouseMove = true;
 				}
-				if(Input.GetMouseButton(0)){
-
-	         	}
 			}
 			if(playerTools.weapon == 4){
-				if(gameObject.GetComponent<FixedJoint>() != null){
-					if(thePlayer.hit.collider == gameObject.GetComponent<FixedJoint>().connectedBody.gameObject.GetComponent<Collider>()){
-						if(Input.GetMouseButtonDown(1)){
+				if(Input.GetMouseButtonDown(1)){
+					if(gameObject.GetComponent<FixedJoint>() != null){
+						if(thePlayer.hit.collider == gameObject.GetComponent<FixedJoint>().connectedBody.gameObject.GetComponent<Collider>()){
 							Destroy(gameObject.GetComponent<FixedJoint>());
 						}
 					}
@@ -142,10 +134,12 @@ public class DragObj : MonoBehaviour
     }
 
     void OnTriggerStay(Collider col){
-    	if(col.gameObject.name == "Water"){
-    		objRb.AddForceAtPosition(buoyancyLift, transform.position);
-    		objRb.drag = 3;
-    		//objRb.AddForce(objRb.velocity * -1 * 1);
+    	if(enableBuoyancy == true){
+    		if(col.gameObject.name == "Water"){
+    			objRb.AddForceAtPosition(buoyancyLift, transform.position);
+    			objRb.drag = 3;
+    			//objRb.AddForce(objRb.velocity * -1 * 1);
+    		}
     	}
     }
     void OnTriggerExit(Collider col) {
@@ -159,22 +153,11 @@ public class DragObj : MonoBehaviour
     	}
     }
 
-    void scrollDestination(){
-    	if(toggleHold == true){
-	    	if(Input.GetAxis("Mouse ScrollWheel") < 0){
-			   	thePlayer.scrollDist -= thePlayer.scrollSpeed;
-			}
-		    if(Input.GetAxis("Mouse ScrollWheel") > 0){
-			   	thePlayer.scrollDist += thePlayer.scrollSpeed;
-			}
-			thePlayer.scrollDist = Mathf.Clamp(thePlayer.scrollDist, thePlayer.scrollMin, thePlayer.scrollMax);
-			thePlayer.destPoint.transform.localPosition = new Vector3(0, 0, thePlayer.scrollDist);
-		}
-    }
-    void DynamicObject(){
+    public void DynamicObject(){
     	objRb.useGravity = true;
 		objRb.freezeRotation = false;
 	  	objRb.isKinematic = false;
+	  	dragging = false;
 
 	  	stopRotation = false;
 	  	freezeObject = false;
@@ -183,6 +166,7 @@ public class DragObj : MonoBehaviour
     	objRb.useGravity = true;
 		objRb.freezeRotation = true;
 		objRb.isKinematic = false;
+		dragging = true;
 		
 		objRb.velocity = (thePlayer.destPoint.position - this.transform.position) * dragSpeed;
 
@@ -202,9 +186,6 @@ public class DragObj : MonoBehaviour
     	objRb.useGravity = false;
 	    objRb.freezeRotation = true;
 	    objRb.isKinematic = true;
-    }
-    void ShootObject(){
-    	DynamicObject();
-	    thePlayer.hit.rigidbody.AddForceAtPosition(GameObject.Find("Camera").transform.forward * thePlayer.pokeForce * 1000, thePlayer.hit.point);
+	    dragging = false;
     }
 }
