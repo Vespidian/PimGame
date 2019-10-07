@@ -30,3 +30,7 @@
 ### Weld Tool
 + Left click 2 objects to weld them together
 + Right click any welded object to release the weld
+### Thrusters
++ Left click to place a thruster
++ Use the delete tool to delete a thruster
++ Use up and down arrow keys to fire thrusters
