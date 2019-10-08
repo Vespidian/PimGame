@@ -9,9 +9,11 @@ public class DontFall : MonoBehaviour
 	public RespawnTypes types = RespawnTypes.RespawnPoint;
 	public float spawnHeight = 100;
 	private Rigidbody rb;
+	private Vector3 spawnPoint = new Vector3(0, 20, 0);
+
+	//SCRIPTS
 	private Character_Controller thePlayer;
 	private SpawnObjects spawner;
-	private Vector3 spawnPoint = new Vector3(0, 20, 0);
 
     // Start is called before the first frame update
     void Start()

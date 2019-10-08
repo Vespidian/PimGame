@@ -1017,6 +1017,7 @@ MonoBehaviour:
   allowWeld: 1
   allowDragging: 1
   enableBuoyancy: 1
+  dragging: 0
 --- !u!65 &316310057
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3448,6 +3449,7 @@ MonoBehaviour:
   allowWeld: 1
   allowDragging: 1
   enableBuoyancy: 1
+  dragging: 0
 --- !u!54 &1688176334
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -4577,7 +4579,7 @@ PrefabInstance:
     - target: {fileID: 2114998347818886524, guid: eb9a5fd94b8142f4993bd29ca822b4d3,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -0.000061035156
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6694198552283862821, guid: eb9a5fd94b8142f4993bd29ca822b4d3,
         type: 3}

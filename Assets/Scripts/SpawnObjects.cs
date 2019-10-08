@@ -16,6 +16,8 @@ public class SpawnObjects : MonoBehaviour
 	public GameObject prefab7;
 	public Vector3 spawnPoint = new Vector3(0, 10, 0);
 	public int coordRange = 5;
+
+	//SCRIPTS
 	private Character_Controller thePlayer;
 
     // Start is called before the first frame update

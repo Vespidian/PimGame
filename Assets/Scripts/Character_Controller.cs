@@ -9,12 +9,13 @@ public class Character_Controller : MonoBehaviour
 	private Vector3 lineDistance;
 	private Vector3 direction;
 
-	public Vector3 spawnPoint;
+	public Vector3 spawnPoint = new Vector3(0, 20, 0);
 	public RaycastHit hit;
 	public RaycastHit staticHit;
 
 	[Header("Tool Settings")]
 	public Transform destPoint;
+	public GameObject selector;
 	public float scrollSpeed = 0.3f;
 	public float scrollDist = 5.0f;
 	public float scrollMin = 2;
@@ -29,7 +30,7 @@ public class Character_Controller : MonoBehaviour
 	public float sprint = 10.0f;
 	public float crouch = 4.0f;
 	public float jumpHeight = 5.0f;
-	private int walkType;//0 = walk / 1 = sprint / 2 = crouch
+	private int walkType = 0;//0 = walk / 1 = sprint / 2 = crouch
 	private bool landed;
 	private bool flying = false;
 	private Vector3 upLift;
@@ -52,17 +53,13 @@ public class Character_Controller : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-    	spawnPoint = new Vector3(0, 20, 0);
     	cameraVars = GameObject.Find("Camera").GetComponent<CamMouseLook>();
 
-    	walkType = 0;
 		rb = this.gameObject.GetComponent<Rigidbody>();
 		line = GameObject.Find("Arms").GetComponent<LineRenderer>();
-		Application.targetFrameRate = 70;
 		upLift = -Physics.gravity * (2 - rb.velocity.y * 5);
 
 		line.SetPosition(0, Vector3.zero);
-
     }
 
     // Update is called once per frame

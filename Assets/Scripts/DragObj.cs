@@ -4,31 +4,33 @@ using UnityEngine;
 
 public class DragObj : MonoBehaviour
 {
+	//PRIVATE VARIABLES
 	Quaternion rot;
 	Quaternion startRot;
 
 	Rigidbody objRb;
 
-	Vector3 pauseVelocity;
+	Vector3 buoyancyLift;
+	Vector3 startPosition;
+	Vector3 rayHitDifference;
 	Vector3 dragObjRel;
-	Vector3 playerDirection;
 	Vector2 mousePos;
 	Vector2 smoothV;
 	Vector2 objRotation;
+	private bool stopRotation = false;
+	private bool freezeObject = false;
+
+	//EDITOR VARIABLES
 	public float dragSpeed = 20;
 	public bool allowDelete = false;
 	public bool allowWeld = true;
 	public bool allowDragging = true;
 	public bool enableBuoyancy = true;
 
-	private bool stopRotation = false;
-	private bool freezeObject = false;
-	private bool dragging = false;
-	private Vector3 buoyancyLift;
+	//OUTER-SCRIPT VARIABLES
+	public bool dragging = false;
 
-	Vector3 startPosition;
-	Vector3 rayHitDifference;
-
+	//SCRIPTS
 	private Character_Controller thePlayer;
 	private Weapons playerTools;
 	private CamMouseLook cameraVars;
@@ -69,6 +71,15 @@ public class DragObj : MonoBehaviour
 		   	
     	}
     }
+
+    void OnMouseOver() {
+    	if(Input.GetMouseButton(0)){
+    		dragging = true;
+    	}else if(Input.GetMouseButtonUp(0)){
+    		dragging = false;
+		}
+    }
+
     void OnMouseUp() {
     	if(playerTools.weapon == 1){
 	    	stopRotation = false;
@@ -183,9 +194,11 @@ public class DragObj : MonoBehaviour
 
     }
     void FreezeObject() {
-    	objRb.useGravity = false;
-	    objRb.freezeRotation = true;
-	    objRb.isKinematic = true;
-	    dragging = false;
+    	if(dragging == true){
+	    	objRb.useGravity = false;
+		    objRb.freezeRotation = true;
+		    objRb.isKinematic = true;
+		    dragging = false;
+		}
     }
 }

@@ -21,7 +21,10 @@ public class CamMouseLook : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update() {
+    void Update() 
+    {
+    	Application.targetFrameRate = 70;
+    	
     	if((Cursor.lockState == CursorLockMode.Locked) && (mouseMove == true)){
 	        var md = new Vector2(Input.GetAxisRaw("Mouse X"), Input.GetAxisRaw("Mouse Y"));
 			

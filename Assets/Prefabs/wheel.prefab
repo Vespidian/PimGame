@@ -145,7 +145,7 @@ HingeJoint:
     contactDistance: 0
   m_BreakForce: Infinity
   m_BreakTorque: Infinity
-  m_EnableCollision: 1
+  m_EnableCollision: 0
   m_EnablePreprocessing: 1
   m_MassScale: 1
   m_ConnectedMassScale: 1
@@ -166,3 +166,4 @@ MonoBehaviour:
   allowWeld: 0
   allowDragging: 0
   enableBuoyancy: 0
+  dragging: 0

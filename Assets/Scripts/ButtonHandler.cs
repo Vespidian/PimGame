@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 public class ButtonHandler : MonoBehaviour
 {
 
+	//SCRIPTS
 	private StartScreen startBack;
 	private Weapons playerTools;
 
@@ -36,14 +37,18 @@ public class ButtonHandler : MonoBehaviour
 
     public void SetToolDelete(){
     	playerTools.weapon = 3;
+    	playerTools.tool = 1;
     }
     public void SetToolWeld(){
-    	playerTools.weapon = 4;
+    	playerTools.weapon = 3;
+    	playerTools.tool = 2;
     }
     public void SetToolThruster(){
-    	playerTools.weapon = 5;
+    	playerTools.weapon = 3;
+    	playerTools.tool = 3;
     }
     public void SetToolWheel(){
-    	playerTools.weapon = 6;
+    	playerTools.weapon = 3;
+    	playerTools.tool = 4;
     }
 }

@@ -14,6 +14,7 @@ public class KeyPresses : MonoBehaviour
 	private GameObject toolSelection;
 	private bool locked = true;
 
+	//SCRIPTS
 	private CamMouseLook cameraVars;
 	private Character_Controller thePlayer;
 

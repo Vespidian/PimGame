@@ -7,26 +7,34 @@ public class Weapons : MonoBehaviour
 {
     Rigidbody draggedObjectRb;
 
-	public bool changingWeapon = true;
-	public int weapon = 1;
-	private int numOfWeapons = 6;
 	private Text weaponTextMain;
     private Text weaponTextPrev;
     private Text weaponTextNext;
+	private int numOfWeapons = 3;
+	private bool canChangeWeapon = true;
+
+	public int weapon = 1;
 
     private GameObject weldObj0;
     private GameObject weldObj1;
     private int weldObjectNum;
     private FixedJoint joint;
 
+    //WEAPONS
     string weapon1 = "Physics Gun";
     string weapon2 = "Impulse Gun";
-    string weapon3 = "Delete Tool";
-    string weapon4 = "Weld Tool";
-    string weapon5 = "Thruster Cannon";
-    string weapon6 = "Wheel Placer";
-    //string weapon7 = "";
+    string weapon3 = "Tool Gun";
+    /*
+    == List of tools in order starting with 1 ==
+    
+    Delete Tool
+    Weld Tool
+    Thruster Tool
+    Wheel Tool
+    */
+    public int tool = 1;
 
+    //SCRIPTS
     private Character_Controller thePlayer;
     private DragObj draggedObjectScript;
     private CamMouseLook cameraVars;
@@ -44,38 +52,8 @@ public class Weapons : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //if weapons is in use do not change
-        if(cameraVars.mouseMove == true){
-        	if(Input.GetMouseButtonDown(0)){
-                if(weapon == 4){
-                    WeldObjects();
-                }
-                if(weapon == 5){
-                    SpawnThruster();
-                }else if(weapon == 6){
-                    SpawnWheel();
-                }
-        	}
-            if(Input.GetMouseButtonDown(1)){
-                if(weapon == 4){
-                    RemoveWeld();
-                }
-            }
-
-        	if(Input.GetMouseButton(0)){
-                if(weapon == 2){
-                    ImpulseObject();
-                }
-                if(weapon == 3){
-                    DeleteObject();
-                }
-        		changingWeapon = false;
-        	}else{
-                changingWeapon = true;
-            }
-        }
         //Scroll through weapons
-	    if(changingWeapon == true){
+	    if(canChangeWeapon == true){
         	if(Input.GetAxisRaw("Mouse ScrollWheel") > 0){//-
 	   			if(weapon != 1){
 	   				weapon--;
@@ -91,7 +69,7 @@ public class Weapons : MonoBehaviour
 	   		}
         }
         CheckWeapon();
-    }
+    }//end Update
 
     void FixedUpdate(){
         if(thePlayer.hit.collider != null){
@@ -102,7 +80,45 @@ public class Weapons : MonoBehaviour
                 draggedObjectRb = thePlayer.hit.collider.gameObject.GetComponent<Rigidbody>();
             }
         }
-    }
+        if(draggedObjectScript != null){
+            if(cameraVars.mouseMove == true){
+                if(Input.GetMouseButtonDown(0)){//PRESSED LEFT MOUSE BUTTON
+                    if(weapon == 3){
+                        if(tool == 2){
+                            WeldObjects();
+                        }
+                        if(tool == 3){
+                            SpawnThruster();
+                        }else if(tool == 4){
+                            SpawnWheel();
+                        }
+                    }
+                    if(weapon == 2){
+                        ImpulseObject();
+                    }
+                }
+
+                if(Input.GetMouseButtonDown(1)){//PRESSED RIGHT MOUSE BUTTON
+                    if(weapon == 3){
+                        if(tool == 2){
+                            RemoveWeld();
+                        }
+                    }
+                }
+
+                if(Input.GetMouseButton(0)){//PRESSING LEFT MOUSE BUTTON
+                    if(weapon == 3){
+                        if(tool == 1){
+                            DeleteObject();
+                        }
+                    }
+                    canChangeWeapon = false;
+                }else{
+                    canChangeWeapon = true;
+                }
+            }
+        }
+    }//end FixedUpdate
 
     void CheckWeapon(){
     	if(weapon == 1){//PHYSICS GUN
@@ -111,22 +127,13 @@ public class Weapons : MonoBehaviour
     	if(weapon == 2){//IMPULSE
     		ImpulseGun();
     	}
-        if(weapon == 3){//DELETE OBJECTS
-            DeleteTool();
-        }
-        if(weapon == 4){//WELD TOOL
-            WeldTool();
-        }
-        if(weapon == 5){//THRUSTER SPAWNER
-            ThrusterSpawner();  
-        }
-        if(weapon == 6){//Wheel Tool
-            WheelSpawner();  
+        if(weapon == 3){
+            ToolGun();
         }
     }
-
+    //WEAPON UI
     void PhysicsGun() {
-        weaponTextPrev.text = weapon6;//CHANGE THIS WHEN ADDING WEAPONS
+        weaponTextPrev.text = weapon3;//CHANGE THIS WHEN ADDING WEAPONS
 
         weaponTextMain.text = weapon1;
         weaponTextNext.text = weapon2;
@@ -137,36 +144,21 @@ public class Weapons : MonoBehaviour
         weaponTextNext.text = weapon3;
         //ImpulseObject();
     }
-    void DeleteTool() {
+    void ToolGun() {
         weaponTextPrev.text = weapon2;
         weaponTextMain.text = weapon3;
-        weaponTextNext.text = weapon4;
-        //DeleteObject();
-    }
-    void WeldTool() {
-        weaponTextPrev.text = weapon3;
-        weaponTextMain.text = weapon4;
-        weaponTextNext.text = weapon5;
-    }
-    void ThrusterSpawner() {
-        weaponTextPrev.text = weapon4;
-        weaponTextMain.text = weapon5;
-        weaponTextNext.text = weapon6;
-    }
-    void WheelSpawner() {
-        weaponTextPrev.text = weapon5;
-        weaponTextMain.text = weapon6;
 
         weaponTextNext.text = weapon1;//CHANGE THIS WHEN ADDING WEAPONS
-    }
+    }//END WEAPON UI
 
-
+    //TOOL FUNCTIONS
     void WeldObjects() {
         if(draggedObjectScript.allowWeld == true){
             if(weldObjectNum == 0){//Selecting first object
                 if(draggedObjectRb != null){
                     weldObj0 = thePlayer.hit.collider.gameObject;
                     weldObjectNum = 1;
+                    ShowSelector();
                 }
             }else if(weldObjectNum == 1) {//Selecting second object
                 if(draggedObjectRb != null){
@@ -176,6 +168,7 @@ public class Weapons : MonoBehaviour
                     if(weldObj0 != weldObj1){
                         joint = weldObj0.AddComponent<FixedJoint>();
                         joint.connectedBody = weldObj1.GetComponent<Rigidbody>();
+                        ShowSelector();
                     }
                 }
             }
@@ -190,29 +183,38 @@ public class Weapons : MonoBehaviour
             if(thePlayer.hit.collider.gameObject.GetComponent<Rigidbody>() != null){
                 if(draggedObjectScript.allowDelete == true){
                     Destroy(thePlayer.hit.collider.gameObject);
+                    ShowSelector();
                 }
             }
         }
     }
 
     void ImpulseObject() {
-        if(Input.GetMouseButtonDown(0)){
+        if(draggedObjectRb != null){
             draggedObjectScript.DynamicObject();
             thePlayer.hit.rigidbody.AddForceAtPosition(GameObject.Find("Camera").transform.forward * thePlayer.pokeForce * 1000, thePlayer.hit.point);
+            ShowSelector();
         }
     }
 
     void SpawnThruster() {
-        if(thePlayer.hit.collider.gameObject.GetComponent<Rigidbody>() != null){
+        if(draggedObjectRb != null){
             var tmpThrust = Instantiate(thePlayer.thruster, thePlayer.hit.point, Quaternion.LookRotation(thePlayer.hit.normal));
             tmpThrust.transform.parent = thePlayer.hit.collider.gameObject.transform;
+            ShowSelector();
         }
     }
 
     void SpawnWheel(){
-        if(thePlayer.hit.collider.gameObject.GetComponent<Rigidbody>() != null){
+        if(draggedObjectRb != null){
             var tmpWheel = Instantiate(thePlayer.wheel, thePlayer.hit.point, Quaternion.LookRotation(thePlayer.hit.normal));
             tmpWheel.GetComponent<HingeJoint>().connectedBody = thePlayer.hit.collider.gameObject.GetComponent<Rigidbody>();
+            ShowSelector();
         }
+    }
+
+    void ShowSelector() {
+        var selector = Instantiate(thePlayer.selector, thePlayer.hit.point, Quaternion.LookRotation(thePlayer.hit.normal));
+        Destroy(selector, 0.1f);
     }
 }

@@ -485,6 +485,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnPoint: {x: 0, y: 0, z: 0}
   destPoint: {fileID: 5052117450340652144}
+  selector: {fileID: 1811546868729258041, guid: 52fe93c6173848249ba030232626dcfd,
+    type: 3}
   scrollSpeed: 0.3
   scrollDist: 5
   scrollMin: 2
