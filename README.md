@@ -1,25 +1,26 @@
 # PimGame
 
 ## Controls
-+ <kbd>Shift</kbd> to sprint
-+ <kbd>Control</kbd> to crouch
++ Shift to sprint
++ Control to crouch
 + Number keys to spawn objects
-+ <kbd>Z</kbd> to zoom
-+ <kbd>R</kbd> to reset the scene
-+ <kbd>Escape</kbd> to pause / show menu
-#### Press <kbd>c</kbd> to enable flight
-+ <kbd>Control</kbd> moves you down
-+ <kbd>Space</kbd> moves you down
++ Z to zoom
++ R to reset the scene
++ Escape to pause / show menu
+#### Press C to enable flight
++ Control moves you down
++ Space moves you down
 
 ## Menus
 ### Item Spawn Menu
-+ Press and hold <kbd>Q</kbd> to open the **Spawn Item Menu** and click on an item to spawn it.
++ Press and hold Q to open the **Spawn Item Menu** and click on an item to spawn it.
 
 ## Tools / Weapons List
 ### Physics Gun
 + Used by clicking and dragging.
-+ <kbd>F</kbd> unfreezes all objects
-+ <kbd>E</kbd> to rotate held object
++ F unfreezes all objects
++ R to unfreeze object you are pointing at
++ E to rotate held object
 + Right click to freeze item in place, and release click to let go of object.
 ### Impulse Gun
 + Used to add a sudden force onto objects in the direction you are looking.
@@ -30,6 +31,7 @@
 ### Weld Tool
 + Left click 2 objects to weld them together
 + Right click any welded object to release the weld
++ R to unweld
 ### Thrusters
 + Left click to place a thruster
 + Use the delete tool to delete a thruster
