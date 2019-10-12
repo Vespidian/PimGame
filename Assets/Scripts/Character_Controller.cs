@@ -17,19 +17,19 @@ public class Character_Controller : MonoBehaviour
 	public Transform destPoint;
 	public GameObject selector;
 	public float scrollSpeed = 0.3f;
-	public float scrollDist = 5.0f;
+	public float scrollDist = 5;
 	public float scrollMin = 2;
-	public float scrollMax = 60;
-	public int pokeForce = 40;
+	public float scrollMax = 500;
+	public int pokeForce = 7;
 	public bool rayHitting = false;
 	public bool allowTools = true;
 	public bool toggleHold = false;
 
 	[Header("Movement Settings")]
-	public float speed = 6.0f;
-	public float sprint = 10.0f;
-	public float crouch = 4.0f;
-	public float jumpHeight = 5.0f;
+	public float speed = 6;
+	public float sprint = 14;
+	public float crouch = 4;
+	public float jumpHeight = 7;
 	private int walkType = 0;//0 = walk / 1 = sprint / 2 = crouch
 	private bool landed;
 	private bool flying = false;
@@ -44,22 +44,29 @@ public class Character_Controller : MonoBehaviour
 	[Header("Misc")]
 	private CamMouseLook cameraVars;
 	public GameObject smokeParticle;
+
+	public GameObject thrusterPreview;
+	public GameObject wheelPreview;
 	public GameObject thruster;
 	public GameObject wheel;
 
 	private float translation;
 	private float strafe;
+
+	private Weapons playerTools;
     
     // Start is called before the first frame update
     void Start()
     {
     	cameraVars = GameObject.Find("Camera").GetComponent<CamMouseLook>();
+		playerTools = GameObject.Find("Player").GetComponent<Weapons>();
 
 		rb = this.gameObject.GetComponent<Rigidbody>();
 		line = GameObject.Find("Arms").GetComponent<LineRenderer>();
 		upLift = -Physics.gravity * (2 - rb.velocity.y * 5);
 
 		line.SetPosition(0, Vector3.zero);
+		Physics.Raycast(GameObject.Find("Camera").transform.position, GameObject.Find("Camera").transform.forward, out staticHit, Mathf.Infinity);
     }
 
     // Update is called once per frame
@@ -162,7 +169,7 @@ public class Character_Controller : MonoBehaviour
 		    	rayHitting = true;
 		   		Debug.DrawRay(GameObject.Find("Camera").transform.position, GameObject.Find("Camera").transform.forward * hit.distance, Color.red);
 		   		
-		   		if(Input.GetMouseButton(0) && cameraVars.mouseMove == true){
+		   		if(Input.GetMouseButton(0) && cameraVars.mouseMove == true && playerTools.weapon == 1){
 			   		line.SetPosition(1, GameObject.Find("Arms").transform.InverseTransformPoint(hit.point));
 			   		lineDistance = GameObject.Find("Arms").transform.InverseTransformPoint(hit.point);
 		   		}else{

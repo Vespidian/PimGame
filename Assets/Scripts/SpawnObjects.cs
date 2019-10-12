@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class SpawnObjects : MonoBehaviour
 {
@@ -16,7 +17,7 @@ public class SpawnObjects : MonoBehaviour
 	public GameObject prefab7;
 	public Vector3 spawnPoint = new Vector3(0, 10, 0);
 	public int coordRange = 5;
-
+	
 	//SCRIPTS
 	private Character_Controller thePlayer;
 
@@ -47,6 +48,7 @@ public class SpawnObjects : MonoBehaviour
 	        }
     	}*/
     }
+
     public void randomizeSpawn() {
     	spawnPoint.x = Random.Range(-coordRange, coordRange);
 	    spawnPoint.z = Random.Range(-coordRange, coordRange);

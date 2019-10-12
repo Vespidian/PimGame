@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody), typeof(PhysicsRestrictions))]
+
 public class DragObj : MonoBehaviour
 {
 	//PRIVATE VARIABLES
@@ -22,10 +24,7 @@ public class DragObj : MonoBehaviour
 
 	//EDITOR VARIABLES
 	public float dragSpeed = 20;
-	public bool allowDelete = false;
-	public bool allowWeld = true;
-	public bool allowDragging = true;
-	public bool enableBuoyancy = true;
+	private Vector3 relVelocity;
 
 	//OUTER-SCRIPT VARIABLES
 	public bool dragging = false;
@@ -34,6 +33,7 @@ public class DragObj : MonoBehaviour
 	private Character_Controller thePlayer;
 	private Weapons playerTools;
 	private CamMouseLook cameraVars;
+	private PhysicsRestrictions selfRestrictions;// Get self restrictions
 
     // Start is called before the first frame update
     void Start()
@@ -41,12 +41,13 @@ public class DragObj : MonoBehaviour
     	thePlayer = GameObject.Find("Player").GetComponent<Character_Controller>();
     	playerTools = GameObject.Find("Player").GetComponent<Weapons>();
     	cameraVars = GameObject.Find("Camera").GetComponent<CamMouseLook>();
+    	selfRestrictions = this.gameObject.GetComponent<PhysicsRestrictions>();
 
     	if(gameObject.GetComponent<Rigidbody>() != null){
         	objRb = gameObject.GetComponent<Rigidbody>();
         	buoyancyLift = -Physics.gravity * (2 - objRb.velocity.y * 5);
     	}else{
-    		allowDragging = false;
+    		selfRestrictions.allowDragging = false;
     	}
     }
 
@@ -73,7 +74,7 @@ public class DragObj : MonoBehaviour
     }
 
     void OnMouseOver() {
-    	if(Input.GetMouseButton(0)){
+    	if(Input.GetMouseButtonDown(0)){
     		dragging = true;
     	}else if(Input.GetMouseButtonUp(0)){
     		dragging = false;
@@ -91,7 +92,7 @@ public class DragObj : MonoBehaviour
 
     void FixedUpdate(){
     	if(thePlayer.allowTools == true){
-	    	if((playerTools.weapon == 1) && (allowDragging == true)){
+	    	if((playerTools.weapon == 1) && (selfRestrictions.allowDragging == true)){
 		    	if((stopRotation == true) && (freezeObject == false)){
 		    		HoldObject();
 
@@ -145,7 +146,7 @@ public class DragObj : MonoBehaviour
     }
 
     void OnTriggerStay(Collider col){
-    	if(enableBuoyancy == true){
+    	if(selfRestrictions.enableBuoyancy == true){
     		if(col.gameObject.name == "Water"){
     			objRb.AddForceAtPosition(buoyancyLift, transform.position);
     			objRb.drag = 3;
@@ -160,7 +161,7 @@ public class DragObj : MonoBehaviour
     }
     void OnCollisionEnter(Collision collision){
     	if(collision.relativeVelocity.magnitude > 10){
-    		Instantiate(thePlayer.smokeParticle, new Vector3(this.transform.position.x, collision.contacts[0].point.y + 0.2f, this.transform.position.z), Quaternion.identity);
+    		Instantiate(thePlayer.smokeParticle, collision.contacts[0].point, Quaternion.identity);
     	}
     }
 
@@ -179,7 +180,10 @@ public class DragObj : MonoBehaviour
 		objRb.isKinematic = false;
 		dragging = true;
 		
-		objRb.velocity = (thePlayer.destPoint.position - this.transform.position) * dragSpeed;
+		//objRb.velocity = (thePlayer.destPoint.position - this.transform.position) * dragSpeed;
+
+		//objRb.rotation = startRot;
+		//objRb.rotation = Quaternion.Euler(startRot.x, startRot.y + GameObject.Find("Player").transform.rotation.y, startRot.z);
 
 		/*if(startRot != this.transform.rotation){
 			objRb.AddTorque((Vector3.right * (startRot.x - transform.rotation.x)) * 100);
@@ -190,7 +194,14 @@ public class DragObj : MonoBehaviour
 
 		//Debug.Log(rayHitDifference);
 
-		//objRb.velocity = (thePlayer.destPoint.position - rayHitDifference - this.transform.position) * dragSpeed;
+
+
+		objRb.velocity = (thePlayer.destPoint.position - transform.TransformDirection(rayHitDifference) - this.transform.position) * dragSpeed;
+		//relVelocity = transform.InverseTransformDirection((thePlayer.destPoint.position - rayHitDifference - this.transform.position) * dragSpeed);
+		//objRb.velocity = transform.TransformDirection(relVelocity);
+
+		//objRb.AddRelativeForce((thePlayer.destPoint.position - rayHitDifference - this.transform.position) * dragSpeed);
+		//objRb.AddForce((thePlayer.destPoint.position - rayHitDifference - this.transform.position) * dragSpeed);
 
     }
     void FreezeObject() {

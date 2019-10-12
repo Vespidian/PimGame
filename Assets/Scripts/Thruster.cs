@@ -16,10 +16,8 @@ public class Thruster : MonoBehaviour
     void Update()
     {
         if(Input.GetKey(KeyCode.UpArrow)){
-        	//parentRb.AddForceAtPosition(Vector3.forward * 100, transform.position);
         	parentRb.AddForceAtPosition(transform.TransformDirection (-Vector3.forward)*500, transform.position);
         }else if(Input.GetKey(KeyCode.DownArrow)){
-        	//parentRb.AddForceAtPosition(-Vector3.forward * 100, transform.position);
         	parentRb.AddForceAtPosition(transform.TransformDirection (Vector3.forward)*500, transform.position);
         }
     }

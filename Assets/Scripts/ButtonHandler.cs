@@ -35,20 +35,28 @@ public class ButtonHandler : MonoBehaviour
     	Application.OpenURL("https://github.com/Vespidian/Unity-Gmod-Physgun/blob/master/README.md");
     }
 
-    public void SetToolDelete(){
+
+    void SetToolGun() {
     	playerTools.weapon = 3;
+    }
+    public void SetToolDelete(){
+    	SetToolGun();
     	playerTools.tool = 1;
     }
     public void SetToolWeld(){
-    	playerTools.weapon = 3;
+    	SetToolGun();
     	playerTools.tool = 2;
     }
     public void SetToolThruster(){
-    	playerTools.weapon = 3;
+    	SetToolGun();
     	playerTools.tool = 3;
     }
     public void SetToolWheel(){
-    	playerTools.weapon = 3;
+    	SetToolGun();
     	playerTools.tool = 4;
+    }
+    public void SetToolDuplicator(){
+    	SetToolGun();
+    	playerTools.tool = 5;
     }
 }

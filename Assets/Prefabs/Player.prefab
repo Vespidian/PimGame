@@ -234,8 +234,8 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0.3
-  far clip plane: 1000
+  near clip plane: 0.1
+  far clip plane: 5000
   field of view: 72
   orthographic: 0
   orthographic size: 5
@@ -371,7 +371,6 @@ GameObject:
   - component: {fileID: 5052117450538020813}
   - component: {fileID: 5052117450538018866}
   - component: {fileID: 5052117450538018867}
-  - component: {fileID: 5052117450538018865}
   - component: {fileID: 5052117450538020809}
   m_Layer: 2
   m_Name: Player
@@ -451,7 +450,7 @@ CapsuleCollider:
   m_Material: {fileID: 13400000, guid: feb9c01215810744f892e9fa4f15830c, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.5000001
+  m_Radius: 0.5
   m_Height: 3
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
@@ -470,7 +469,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 1
   m_Constraints: 112
-  m_CollisionDetection: 0
+  m_CollisionDetection: 2
 --- !u!114 &5052117450538018867
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -495,7 +494,7 @@ MonoBehaviour:
   rayHitting: 0
   allowTools: 1
   toggleHold: 0
-  speed: 8
+  speed: 6
   sprint: 14
   crouch: 4
   jumpHeight: 7
@@ -505,30 +504,13 @@ MonoBehaviour:
   lowestPossiblePoint: -30
   smokeParticle: {fileID: 5713719400332742403, guid: 345c24c0c3ed2174d9f37b8b4e9b8a53,
     type: 3}
+  thrusterPreview: {fileID: 408742476044837173, guid: 13c48383e7f59a1459751b43a7ce31f4,
+    type: 3}
+  wheelPreview: {fileID: 1087741274420735761, guid: 97484aa0d45792e4893782aa36f723eb,
+    type: 3}
   thruster: {fileID: 4311151369287526836, guid: 3d293e4d0d777c24d8b22e091b9f8c60,
     type: 3}
   wheel: {fileID: 4331298574844262099, guid: 4f5b73f0454aa6d448bdc42f9dd73574, type: 3}
---- !u!114 &5052117450538018865
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5052117450538018870}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 68e9d544f9c1ce24a9e4d1f74adc1fb6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  prefab1: {fileID: 8698989847384084025, guid: 15fd925fdf3c3ee4b8e9c23086c70572, type: 3}
-  prefab2: {fileID: 358387497239033005, guid: 839202276a8a6f14fa8a4065c9e3cdcc, type: 3}
-  prefab3: {fileID: 2263753033829582385, guid: c0a3c3e2812d384429aba93b545d4e31, type: 3}
-  prefab4: {fileID: 7329138125284509763, guid: 289a3074a8cf1954a8ba787c5e321c3b, type: 3}
-  prefab5: {fileID: 0}
-  prefab6: {fileID: 0}
-  prefab7: {fileID: 0}
-  spawnPoint: {x: 0, y: 20, z: 0}
-  coordRange: 5
 --- !u!114 &5052117450538020809
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -541,5 +523,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d251f5e19ea33747864c5ebd139613d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  changingWeapon: 1
   weapon: 1
+  tool: 1

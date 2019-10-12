@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 5708928311178188068}
   - component: {fileID: 5708928311178188064}
   - component: {fileID: 7277370217393617038}
+  - component: {fileID: 9025191936550484756}
   m_Layer: 0
   m_Name: wheel
   m_TagString: Untagged
@@ -162,8 +163,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dragSpeed: 20
+  dragging: 0
+--- !u!114 &9025191936550484756
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4331298574844262099}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6dd39132316a4a44d9c77f33f46ee61f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   allowDelete: 1
   allowWeld: 0
   allowDragging: 0
-  enableBuoyancy: 0
-  dragging: 0
+  enableBuoyancy: 1
+  allowThruster: 0
+  allowWheel: 0

@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 1115416290293869792}
   - component: {fileID: 3117844060212364735}
   - component: {fileID: -606270786112523599}
+  - component: {fileID: -5993946730778623961}
   m_Layer: 0
   m_Name: thruster
   m_TagString: Untagged
@@ -123,7 +124,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dragSpeed: 20
+  dragging: 0
+--- !u!114 &-5993946730778623961
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4311151369287526836}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6dd39132316a4a44d9c77f33f46ee61f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   allowDelete: 1
   allowWeld: 0
   allowDragging: 0
   enableBuoyancy: 0
+  allowThruster: 0
+  allowWheel: 0

@@ -35,7 +35,7 @@ public class KeyPresses : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-    	if(Input.GetKeyDown("r")){
+    	if(Input.GetKeyDown("t")){
     		SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     	}
     	if(Input.GetKey(KeyCode.Z)){//Zoom in by pressing z
