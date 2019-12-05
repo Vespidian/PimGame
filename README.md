@@ -14,8 +14,8 @@
 ## Menus
 + Press and hold Q to open the menus
 ### Item Spawn Menu
-+ From the **Spawn Item Menu** you can click on an item to spawn it into the world.
-### Tool Choose Menu
++ From the **Item Spawn Menu** you can click on an item to spawn it into the world.
+### Tool Selection Menu
 + From the **Tool Selection Menu** you can click on a tool to begin using it.
 
 
