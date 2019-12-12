@@ -11,10 +11,13 @@ public class ButtonHandler : MonoBehaviour
 	private StartScreen startBack;
 	private Weapons playerTools;
 
+
 	void Start() {
 		startBack = GameObject.Find("EventSystem").GetComponent<StartScreen>();
-		playerTools = GameObject.Find("Player").GetComponent<Weapons>();
 		//startBack.disableSplash();
+		if(SceneManager.GetActiveScene().name == "SampleScene"){
+			playerTools = GameObject.Find("Player").GetComponent<Weapons>();
+		}
 	}
 
     public void quitGame() {
@@ -37,26 +40,32 @@ public class ButtonHandler : MonoBehaviour
 
 
     void SetToolGun() {
+		playerTools = GameObject.Find("Player").GetComponent<Weapons>();
     	playerTools.weapon = 3;
+    	playerTools.ToolDescriptor();
     }
     public void SetToolDelete(){
-    	SetToolGun();
     	playerTools.tool = 1;
+    	SetToolGun();
     }
     public void SetToolWeld(){
-    	SetToolGun();
     	playerTools.tool = 2;
+    	SetToolGun();
     }
     public void SetToolThruster(){
-    	SetToolGun();
     	playerTools.tool = 3;
+    	SetToolGun();
     }
     public void SetToolWheel(){
-    	SetToolGun();
     	playerTools.tool = 4;
+    	SetToolGun();
     }
     public void SetToolDuplicator(){
-    	SetToolGun();
     	playerTools.tool = 5;
+    	SetToolGun();
+    }
+    public void SetToolHinge(){
+    	playerTools.tool = 6;
+    	SetToolGun();
     }
 }

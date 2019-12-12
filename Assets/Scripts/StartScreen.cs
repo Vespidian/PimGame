@@ -24,12 +24,12 @@ public class StartScreen : MonoBehaviour
     
     public void enableSplash(){
         startScreen.SetActive(true);
-        Debug.Log("enable splash");
+        //Debug.Log("enable splash");
     }
 
     public void disableSplash(){
         startScreen.SetActive(false);
-        Debug.Log("Disable splash");
+        //Debug.Log("Disable splash");
     }
     void Update() {
 

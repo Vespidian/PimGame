@@ -27,7 +27,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3836318234072520089}
   m_LocalRotation: {x: 0, y: 0, z: 1, w: 0}
-  m_LocalPosition: {x: 0.3, y: -0.3, z: 0.7}
+  m_LocalPosition: {x: 0.32, y: -0.3, z: 0.7}
   m_LocalScale: {x: 10, y: 30, z: 10}
   m_Children: []
   m_Father: {fileID: 5052117449398419129}
@@ -55,6 +55,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -94,10 +95,11 @@ LineRenderer:
   m_MotionVectors: 0
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 0}
+  - {fileID: 2100000, guid: 758996b8d49495548a50b6e7437bd492, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -123,7 +125,7 @@ LineRenderer:
   - {x: 0, y: 0, z: 1}
   m_Parameters:
     serializedVersion: 3
-    widthMultiplier: 0.02
+    widthMultiplier: 0.03
     widthCurve:
       serializedVersion: 2
       m_Curve:
@@ -136,6 +138,15 @@ LineRenderer:
         weightedMode: 0
         inWeight: 0.33333334
         outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
@@ -333,6 +344,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -369,8 +381,8 @@ GameObject:
   - component: {fileID: 5052117450538020815}
   - component: {fileID: 5052117450538020812}
   - component: {fileID: 5052117450538020813}
-  - component: {fileID: 5052117450538018866}
-  - component: {fileID: 5052117450538018867}
+  - component: {fileID: 7429159899010604216}
+  - component: {fileID: -5395305707712914991}
   - component: {fileID: 5052117450538020809}
   m_Layer: 2
   m_Name: Player
@@ -416,6 +428,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -454,7 +467,7 @@ CapsuleCollider:
   m_Height: 3
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
---- !u!54 &5052117450538018866
+--- !u!54 &7429159899010604216
 Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -467,10 +480,10 @@ Rigidbody:
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
-  m_Interpolate: 1
+  m_Interpolate: 0
   m_Constraints: 112
-  m_CollisionDetection: 2
---- !u!114 &5052117450538018867
+  m_CollisionDetection: 0
+--- !u!114 &-5395305707712914991
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -479,10 +492,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 5052117450538018870}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 869b324671e605e4ba58be15425396f5, type: 3}
+  m_Script: {fileID: 11500000, guid: 551d96810133e5f4faba0e2ea037d4cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnPoint: {x: 0, y: 0, z: 0}
+  spawnPoint: {x: 0, y: 20, z: 0}
+  numberOfItems: 0
   destPoint: {fileID: 5052117450340652144}
   selector: {fileID: 1811546868729258041, guid: 52fe93c6173848249ba030232626dcfd,
     type: 3}
@@ -499,6 +513,8 @@ MonoBehaviour:
   crouch: 4
   jumpHeight: 7
   pauseGame: 0
+  sitting: 0
+  allowMovement: 1
   objSpawnRange: 5
   objSpwnPoint: {x: 0, y: 20, z: 0}
   lowestPossiblePoint: -30
@@ -511,6 +527,8 @@ MonoBehaviour:
   thruster: {fileID: 4311151369287526836, guid: 3d293e4d0d777c24d8b22e091b9f8c60,
     type: 3}
   wheel: {fileID: 4331298574844262099, guid: 4f5b73f0454aa6d448bdc42f9dd73574, type: 3}
+  steering: {fileID: 6479388494704066661, guid: 6f36636593fdbef4d8ac8d77550462f0,
+    type: 3}
 --- !u!114 &5052117450538020809
 MonoBehaviour:
   m_ObjectHideFlags: 0

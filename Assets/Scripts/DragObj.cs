@@ -30,7 +30,7 @@ public class DragObj : MonoBehaviour
 	public bool dragging = false;
 
 	//SCRIPTS
-	private Character_Controller thePlayer;
+	private CharController thePlayer;
 	private Weapons playerTools;
 	private CamMouseLook cameraVars;
 	private PhysicsRestrictions selfRestrictions;// Get self restrictions
@@ -38,7 +38,7 @@ public class DragObj : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-    	thePlayer = GameObject.Find("Player").GetComponent<Character_Controller>();
+    	thePlayer = GameObject.Find("Player").GetComponent<CharController>();
     	playerTools = GameObject.Find("Player").GetComponent<Weapons>();
     	cameraVars = GameObject.Find("Camera").GetComponent<CamMouseLook>();
     	selfRestrictions = this.gameObject.GetComponent<PhysicsRestrictions>();
@@ -78,6 +78,16 @@ public class DragObj : MonoBehaviour
     		dragging = true;
     	}else if(Input.GetMouseButtonUp(0)){
     		dragging = false;
+		}
+		if(playerTools.weapon == 3 && playerTools.weapon == 2){
+			if(Input.GetMouseButtonDown(1) || Input.GetKeyDown(KeyCode.R)){
+				if(gameObject.GetComponent<FixedJoint>() != null){
+					if(thePlayer.hit.collider == gameObject.GetComponent<FixedJoint>().connectedBody.gameObject.GetComponent<Collider>()){
+						Destroy(gameObject.GetComponent<FixedJoint>());
+						playerTools.ShowSelector();
+					}
+				}
+			}
 		}
     }
 
@@ -131,15 +141,6 @@ public class DragObj : MonoBehaviour
 				}else if(Input.GetKeyUp(KeyCode.E))
 				{
 					cameraVars.mouseMove = true;
-				}
-			}
-			if(playerTools.weapon == 4){
-				if(Input.GetMouseButtonDown(1)){
-					if(gameObject.GetComponent<FixedJoint>() != null){
-						if(thePlayer.hit.collider == gameObject.GetComponent<FixedJoint>().connectedBody.gameObject.GetComponent<Collider>()){
-							Destroy(gameObject.GetComponent<FixedJoint>());
-						}
-					}
 				}
 			}
 		}

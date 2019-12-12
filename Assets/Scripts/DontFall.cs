@@ -12,14 +12,14 @@ public class DontFall : MonoBehaviour
 	private Vector3 spawnPoint = new Vector3(0, 20, 0);
 
 	//SCRIPTS
-	private Character_Controller thePlayer;
+	private CharController thePlayer;
 	private SpawnObjects spawner;
 
     // Start is called before the first frame update
     void Start()
     {
         rb = gameObject.GetComponent<Rigidbody>();
-        thePlayer = GameObject.Find("Player").GetComponent<Character_Controller>();
+        thePlayer = GameObject.Find("Player").GetComponent<CharController>();
 
         spawnPoint = thePlayer.objSpwnPoint;
     }

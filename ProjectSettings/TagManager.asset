@@ -8,6 +8,7 @@ TagManager:
   - Floor
   - Trash
   - Water
+  - Sittable
   layers:
   - Default
   - TransparentFX

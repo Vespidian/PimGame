@@ -19,12 +19,12 @@ public class SpawnObjects : MonoBehaviour
 	public int coordRange = 5;
 	
 	//SCRIPTS
-	private Character_Controller thePlayer;
+	private CharController thePlayer;
 
     // Start is called before the first frame update
     void Start()
     {
-    	thePlayer = GameObject.Find("Player").GetComponent<Character_Controller>();
+    	thePlayer = GameObject.Find("Player").GetComponent<CharController>();
     	//respawn = GameObject.Find("Player").GetComponent<DontFall>();   
     }
 
@@ -32,18 +32,16 @@ public class SpawnObjects : MonoBehaviour
     void Update()
     {
     	/*if(thePlayer.rayHitting == true){
-	    	
+	    	if(Input.GetKeyDown(KeyCode.Alpha1)){
+                Instantiate(prefab1, spawnPoint, Quaternion.identity);
+            }
 	        if(Input.GetKeyDown(KeyCode.Alpha1)){
-	        	randomizeSpawn();
 	        	Instantiate(prefab1, spawnPoint, Quaternion.identity);
 	        }else if(Input.GetKeyDown(KeyCode.Alpha2)){
-	        	randomizeSpawn();
 	        	Instantiate(prefab2, spawnPoint, Quaternion.identity);
 	        }else if(Input.GetKeyDown(KeyCode.Alpha3)){
-	        	randomizeSpawn();
 	        	Instantiate(prefab3, spawnPoint, Quaternion.identity);
 	        }else if(Input.GetKeyDown(KeyCode.Alpha4)){
-	        	randomizeSpawn();
 	        	Instantiate(prefab4, spawnPoint, Quaternion.identity);
 	        }
     	}*/
@@ -56,31 +54,30 @@ public class SpawnObjects : MonoBehaviour
     }
 
     public void SpawnPrefab1(){
-    	randomizeSpawn();
-	    Instantiate(prefab1, spawnPoint, Quaternion.identity);
+	    SpawnObject(prefab1);
     }
     public void SpawnPrefab2(){
-    	randomizeSpawn();
-	    Instantiate(prefab2, spawnPoint, Quaternion.identity);
+	    SpawnObject(prefab2);
     }
     public void SpawnPrefab3(){
-    	randomizeSpawn();
-	    Instantiate(prefab3, spawnPoint, Quaternion.identity);
+	    SpawnObject(prefab3);
     }
     public void SpawnPrefab4(){
-    	randomizeSpawn();
-	    Instantiate(prefab4, spawnPoint, Quaternion.identity);
+	    SpawnObject(prefab4);
     }
     public void SpawnPrefab5(){
-    	randomizeSpawn();
-	    Instantiate(prefab5, spawnPoint, Quaternion.identity);
+	    SpawnObject(prefab5);
     }
     public void SpawnPrefab6(){
-    	randomizeSpawn();
-	    Instantiate(prefab6, spawnPoint, Quaternion.identity);
+	    SpawnObject(prefab6);
     }
     /*public void SpawnPrefab7(){
-    	randomizeSpawn();
-	    Instantiate(prefab7, spawnPoint, Quaternion.identity);
+	    SpawnObject(prefab7);
     }*/
+
+    public void SpawnObject(GameObject spawn){
+        Instantiate(spawn, thePlayer.hit.point + (thePlayer.hit.normal + Vector3.up)*1, Quaternion.identity);
+        thePlayer.numberOfItems++;
+        Debug.Log(thePlayer.numberOfItems);
+    }
 }

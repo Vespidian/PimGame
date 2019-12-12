@@ -12,6 +12,7 @@ public class PhysicsRestrictions : MonoBehaviour
 
 	public bool allowThruster = true;
 	public bool allowWheel = true;
+    public bool hinge = false;
     // Start is called before the first frame update
     void Start()
     {
