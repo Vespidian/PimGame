@@ -12,8 +12,12 @@
 + Space moves you down
 
 ## Menus
++ Press and hold Q to open the menus
 ### Item Spawn Menu
-+ Press and hold Q to open the **Spawn Item Menu** and click on an item to spawn it.
++ From the **Item Spawn Menu** you can click on an item to spawn it into the world.
+### Tool Selection Menu
++ From the **Tool Selection Menu** you can click on a tool to begin using it.
+
 
 ## Tools / Weapons List
 ### Physics Gun
@@ -36,3 +40,6 @@
 + Left click to place a thruster
 + Use the delete tool to delete a thruster
 + Use up and down arrow keys to fire thrusters
+### Hinge Tool
++ Left click to place a hinge
++ Press E when hovering over a hinge to reverse it's direction
