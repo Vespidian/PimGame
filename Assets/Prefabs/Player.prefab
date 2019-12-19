@@ -511,7 +511,7 @@ MonoBehaviour:
   speed: 6
   sprint: 14
   crouch: 4
-  jumpHeight: 7
+  jumpHeight: 10
   pauseGame: 0
   sitting: 0
   allowMovement: 1
@@ -529,6 +529,7 @@ MonoBehaviour:
   wheel: {fileID: 4331298574844262099, guid: 4f5b73f0454aa6d448bdc42f9dd73574, type: 3}
   steering: {fileID: 6479388494704066661, guid: 6f36636593fdbef4d8ac8d77550462f0,
     type: 3}
+  balloon: {fileID: 2192247392915416512, guid: 150a7472a8af85649a2743022d9dee62, type: 3}
 --- !u!114 &5052117450538020809
 MonoBehaviour:
   m_ObjectHideFlags: 0

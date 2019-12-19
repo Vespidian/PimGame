@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: concrete2
-  m_Shader: {fileID: 4800000, guid: 07e97008e612e784d8f542b602cdc0c4, type: 3}
+  m_Shader: {fileID: 4800000, guid: 57a70ab6f5c9be745a08de59ddf8bfcb, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -44,11 +44,11 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 43ba760d08d086a46ae9eb554ffbd3ff, type: 3}
+        m_Texture: {fileID: 2800000, guid: 4e74819747c288442802d167800181ab, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTexSide:
-        m_Texture: {fileID: 2800000, guid: 43ba760d08d086a46ae9eb554ffbd3ff, type: 3}
+        m_Texture: {fileID: 2800000, guid: 4e74819747c288442802d167800181ab, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:

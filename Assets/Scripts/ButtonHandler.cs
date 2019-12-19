@@ -15,7 +15,7 @@ public class ButtonHandler : MonoBehaviour
 	void Start() {
 		startBack = GameObject.Find("EventSystem").GetComponent<StartScreen>();
 		//startBack.disableSplash();
-		if(SceneManager.GetActiveScene().name == "SampleScene"){
+		if(SceneManager.GetActiveScene().name != "StartMenu"){
 			playerTools = GameObject.Find("Player").GetComponent<Weapons>();
 		}
 	}
@@ -66,6 +66,14 @@ public class ButtonHandler : MonoBehaviour
     }
     public void SetToolHinge(){
     	playerTools.tool = 6;
+    	SetToolGun();
+    }
+    public void SetToolGravToggle(){
+    	playerTools.tool = 7;
+    	SetToolGun();
+    }
+    public void SetToolBalloon(){
+    	playerTools.tool = 8;
     	SetToolGun();
     }
 }

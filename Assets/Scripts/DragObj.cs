@@ -51,6 +51,14 @@ public class DragObj : MonoBehaviour
     	}
     }
 
+    void Update() {
+    	if(selfRestrictions.wheel == true && GetComponent<HingeJoint>().connectedBody == null){
+    		Destroy(gameObject);
+    	}else if(selfRestrictions.hinge == true && GetComponent<FixedJoint>().connectedBody == null){
+    		Destroy(gameObject);
+    	}
+    }
+
     void OnMouseDown() {
     	if(playerTools.weapon == 1){
 	    	stopRotation = true;
@@ -144,6 +152,13 @@ public class DragObj : MonoBehaviour
 				}
 			}
 		}
+		if(selfRestrictions.reverseGravity == true && selfRestrictions.balloon == true){
+			objRb.useGravity = false;
+			objRb.AddForceAtPosition(new Vector3(0, 49.05f, 0), transform.TransformPoint(new Vector3(0, 0, 1.25f)), ForceMode.Acceleration);
+		}else if(selfRestrictions.reverseGravity == true){
+			objRb.useGravity = false;
+			objRb.AddForce(new Vector3(0, 9.8f, 0), ForceMode.Acceleration);
+		}
     }
 
     void OnTriggerStay(Collider col){
@@ -167,7 +182,7 @@ public class DragObj : MonoBehaviour
     }
 
     public void DynamicObject(){
-    	objRb.useGravity = true;
+    	//objRb.useGravity = true;
 		objRb.freezeRotation = false;
 	  	objRb.isKinematic = false;
 	  	dragging = false;
@@ -176,7 +191,7 @@ public class DragObj : MonoBehaviour
 	  	freezeObject = false;
     }
     void HoldObject() {
-    	objRb.useGravity = true;
+    	//objRb.useGravity = true;
 		objRb.freezeRotation = true;
 		objRb.isKinematic = false;
 		dragging = true;
@@ -207,7 +222,7 @@ public class DragObj : MonoBehaviour
     }
     void FreezeObject() {
     	if(dragging == true){
-	    	objRb.useGravity = false;
+	    	//objRb.useGravity = false;
 		    objRb.freezeRotation = true;
 		    objRb.isKinematic = true;
 		    dragging = false;

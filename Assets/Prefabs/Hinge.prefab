@@ -58,6 +58,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -123,13 +124,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6dd39132316a4a44d9c77f33f46ee61f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  allowDragging: 1
   allowDelete: 0
   allowWeld: 1
-  allowDragging: 1
   enableBuoyancy: 1
+  reverseGravity: 0
   allowThruster: 1
   allowWheel: 1
-  hinge: 1
+  prop: 0
+  thruster: 0
+  wheel: 0
+  balloon: 0
+  hinge: 0
 --- !u!114 &6479388494465039448
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -161,7 +167,7 @@ GameObject:
   - component: {fileID: 6479388494704066669}
   - component: {fileID: 6479388494704066668}
   - component: {fileID: 7314884022065587896}
-  - component: {fileID: 6137481798846776280}
+  - component: {fileID: 9213601187372620773}
   m_Layer: 0
   m_Name: Hinge
   m_TagString: Untagged
@@ -206,6 +212,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -285,12 +292,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6dd39132316a4a44d9c77f33f46ee61f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  allowDragging: 1
   allowDelete: 1
   allowWeld: 0
-  allowDragging: 1
   enableBuoyancy: 0
+  reverseGravity: 0
   allowThruster: 0
   allowWheel: 1
+  prop: 0
+  thruster: 0
+  wheel: 0
+  balloon: 0
   hinge: 1
 --- !u!114 &6479388494704066668
 MonoBehaviour:
@@ -318,8 +330,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2dd1f7b7d08a7143adebfed0cf32e72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  direction: 1
---- !u!59 &6137481798846776280
+  steerDir: 1
+--- !u!59 &9213601187372620773
 HingeJoint:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

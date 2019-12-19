@@ -44,6 +44,8 @@ public class Weapons : MonoBehaviour
     Wheel Tool
     Duplicator Tool
     Hinge Tool
+    Gravity Toggle
+    Spawn Balloon
     */
     public int tool = 1;
 
@@ -79,34 +81,28 @@ public class Weapons : MonoBehaviour
 	   			}else{
 	   				weapon = numOfWeapons;
 	   			}
-                SpawnPreview(previewName);
+                SpawnPreview("delete");
 	   		}if(Input.GetAxisRaw("Mouse ScrollWheel") < 0){//+
 	   			if(weapon != numOfWeapons){
 	   				weapon++;
 	   			}else{
 	   				weapon = 1;
 	   			}
-                SpawnPreview(previewName);
+                SpawnPreview("delete");
 	   		}
         }
         CheckWeapon();
         if(cameraVars.mouseMove == true){
             if(weapon == 3){
                 switch(tool){
-                    case 1://Delete Tool
-
-                        break;
-                    case 2://Weld Tool
-
-                        break;
                     case 3://Thruster Tool
                         SpawnPreview("thruster");
                         break;
                     case 4://Wheel Tool
                         SpawnPreview("wheel");
                         break;
-                    case 5://Duplicator Tool
-
+                    default:
+                        SpawnPreview("delete");
                         break;
                 }
             }
@@ -125,6 +121,10 @@ public class Weapons : MonoBehaviour
                             DuplicateObject("left");
                         }else if(tool == 6){
                             SpawnHinge();
+                        }else if(tool == 7){
+                            ToggleGravity();
+                        }else if(tool == 8){
+                            SpawnBalloon();
                         }
                     }
                     if(weapon == 2){
@@ -310,6 +310,24 @@ public class Weapons : MonoBehaviour
         }
     }
 
+    void ToggleGravity(){
+        Rigidbody rb = thePlayer.hit.collider.gameObject.GetComponent<Rigidbody>();
+        if(rb != null){
+            if(rb.useGravity == true){
+                rb.useGravity = false;
+            }else if(rb.useGravity == false){
+                rb.useGravity = true;
+            }
+        }
+    }
+
+    void SpawnBalloon(){
+        if(draggedObjectRb != null){
+            var tmpBalloon = Instantiate(thePlayer.balloon, thePlayer.hit.point, Quaternion.identity);
+            tmpBalloon.GetComponent<Balloon>().SetFixPoint(thePlayer.hit.point, thePlayer.hit.collider.gameObject);
+        }
+    }
+
     void DuplicateObject(string click) {
         dupeObjectNum = 1;
         if(click == "left"){
@@ -327,7 +345,7 @@ public class Weapons : MonoBehaviour
     //For any tools that place objects
     void SpawnPreview(string item) {
         previewName = item;
-        if(thePlayer.hit.collider != null && draggedObjectRb != null && weapon == 3){
+        if(thePlayer.hit.collider != null && draggedObjectRb != null && weapon == 3 && item != "delete"){
             if(previewVisible == false){
                 if(item == "thruster"){
                     previewVisible = true;
@@ -339,7 +357,7 @@ public class Weapons : MonoBehaviour
             }
             previewObject.transform.rotation = Quaternion.LookRotation(thePlayer.hit.normal);
             previewObject.transform.position = thePlayer.hit.point;
-        }else if(previewObject != null){
+        }else if(previewObject != null && item == "delete"){
             Destroy(previewObject);
             previewVisible = false;
         }
@@ -393,6 +411,14 @@ public class Weapons : MonoBehaviour
                 case 6://HINGE TOOL
                     selectedWeapon.text = "Hinge Tool";
                     selectedWeaponFunction.text = "Press the left and right keys to turn hinges \nPress e while hovering over a hinge to change its direction";
+                    break;
+                case 7://GRAVITY TOGGLE
+                    selectedWeapon.text = "Gravity Toggle";
+                    selectedWeaponFunction.text = "Press the left and right keys to turn hinges \nPress e while hovering over a hinge to change its direction";
+                    break;
+                case 8:
+                    selectedWeapon.text = "Spawn Balloon";
+                    selectedWeaponFunction.text = "Click on an object to spawn a ballon on it.";
                     break;
             }
         }

@@ -43,7 +43,7 @@ public class CamMouseLook : MonoBehaviour
 			character.transform.localRotation = Quaternion.AngleAxis(mouseLook.x, character.transform.up);
 		}
 
-		FPS.text = (1f / Time.unscaledDeltaTime).ToString();
+		//FPS.text = (1f / Time.unscaledDeltaTime).ToString();
 
 	}
 }

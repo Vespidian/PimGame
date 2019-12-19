@@ -54,6 +54,7 @@ public class CharController : MonoBehaviour
 	public GameObject thruster;
 	public GameObject wheel;
 	public GameObject steering;
+	public GameObject balloon;
 
 	private float translation;
 	private float strafe;
@@ -95,13 +96,12 @@ public class CharController : MonoBehaviour
 	    	if(Input.GetKey(KeyCode.LeftControl)){
 	    		walkType = 2;
 	    		GameObject.Find("Camera").transform.localPosition = new Vector3(0, 0, 0);
-
 	    		GetComponent<CapsuleCollider>().height = 2;
 	    		GetComponent<CapsuleCollider>().center = new Vector3(0, -0.5f, 0);
+
 	    	}else if(Input.GetKeyUp(KeyCode.LeftControl)){
 	    		walkType = 0;
 	    		GameObject.Find("Camera").transform.localPosition = new Vector3(0, 1, 0);
-
 	    		GetComponent<CapsuleCollider>().height = 3;
 	    		GetComponent<CapsuleCollider>().center = new Vector3(0, 0, 0);
 	    	}
@@ -205,8 +205,9 @@ public class CharController : MonoBehaviour
 		   		Debug.DrawRay(GameObject.Find("Camera").transform.position, GameObject.Find("Camera").transform.forward * hit.distance, Color.red);
 		   		
 		   		if(Input.GetMouseButton(0) && cameraVars.mouseMove == true && playerTools.weapon == 1){
-			   		line.SetPosition(1, GameObject.Find("Arms").transform.InverseTransformPoint(hit.point));
-			   		lineDistance = GameObject.Find("Arms").transform.InverseTransformPoint(hit.point);
+		   			line.SetPosition(0, Vector3.zero);
+			   		line.SetPosition(1, transform.InverseTransformPoint(hit.point));
+			   		//lineDistance = GameObject.Find("Arms").transform.InverseTransformPoint(hit.point);
 		   		}else{
 		   			line.SetPosition(1, Vector3.zero);
 		   		}
