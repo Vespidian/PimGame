@@ -21,6 +21,10 @@ public class PhysicsRestrictions : MonoBehaviour
     public bool wheel = false;
     public bool balloon = false;
     public bool hinge = false;
+
+    [Header("World Settings")]
+    public bool destroyOnFall = true;
+
     // Start is called before the first frame update
     void Start()
     {

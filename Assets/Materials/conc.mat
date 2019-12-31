@@ -40,11 +40,11 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 43ba760d08d086a46ae9eb554ffbd3ff, type: 3}
+        m_Texture: {fileID: 2800000, guid: 4e74819747c288442802d167800181ab, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTexSide:
-        m_Texture: {fileID: 2800000, guid: 43ba760d08d086a46ae9eb554ffbd3ff, type: 3}
+        m_Texture: {fileID: 2800000, guid: 4e74819747c288442802d167800181ab, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
@@ -81,7 +81,7 @@ Material:
     - _NoiseScale: 1
     - _OcclusionStrength: 1
     - _Parallax: 0.02
-    - _RimPower: 1
+    - _RimPower: 20
     - _Scale: 1
     - _SideScale: 1
     - _SmoothnessTextureChannel: 0
@@ -91,7 +91,7 @@ Material:
     - _UVSec: 0
     - _ZWrite: 1
     m_Colors:
-    - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _Color: {r: 0.7830189, g: 0.7830189, b: 0.7830189, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _RimColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
     - _RimColor2: {r: 0.5, g: 0.5, b: 0.5, a: 1}

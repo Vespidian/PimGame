@@ -23,6 +23,10 @@ public class Weapons : MonoBehaviour
     private int weldObjectNum;
     private FixedJoint joint;
 
+    private ConfigurableJoint destConfigJoint;
+    private Quaternion objStartRotation;
+
+
     private int dupeObjectNum = 1;
 
     private GameObject dupeObject;
@@ -67,6 +71,8 @@ public class Weapons : MonoBehaviour
         selectedWeapon = GameObject.Find("Weapon").GetComponent<Text>();
         selectedWeaponFunction = GameObject.Find("Function").GetComponent<Text>();
 
+        destConfigJoint = cameraVars.gameObject.transform.Find("Destination").GetComponent<ConfigurableJoint>();
+
         ToolDescriptor();
     }
 
@@ -108,7 +114,15 @@ public class Weapons : MonoBehaviour
             }
             if(thePlayer.hit.collider != null){
                 if(Input.GetMouseButtonDown(0)){//PRESSED LEFT MOUSE BUTTON
-                    if(weapon == 3){
+                    if(weapon == 1){
+                        if(draggedObjectRb != null){
+                            objStartRotation = draggedObjectRb.gameObject.transform.rotation;
+                        }
+
+                    }else if(weapon == 2){
+                        ImpulseObject();
+
+                    }else if(weapon == 3){
                         if(tool == 1){
                             DeleteObject();
                         }else if(tool == 2){
@@ -127,17 +141,28 @@ public class Weapons : MonoBehaviour
                             SpawnBalloon();
                         }
                     }
-                    if(weapon == 2){
-                        ImpulseObject();
-                    }
                 }
                 if(Input.GetMouseButton(0)){//PRESSING LEFT MOUSE BUTTON
-                    if(weapon == 3){
+                    if(weapon == 1){
+                        if(objectRestrictions != null){
+                            if(objectRestrictions.allowDragging == true){
+                                destConfigJoint.connectedBody = draggedObjectRb;
+                                destConfigJoint.targetRotation = objStartRotation;
+
+                            }
+                        }
                     }
                     canChangeWeapon = false;
                 }else{
                     canChangeWeapon = true;
                 }
+
+                if(Input.GetMouseButtonUp(0)){
+                    if(weapon == 1){
+                        destConfigJoint.connectedBody = null;
+                    }
+                }
+
                 if(Input.GetMouseButtonDown(1)){//PRESSED RIGHT MOUSE BUTTON
                     if(weapon == 3){
                         if(tool == 2){

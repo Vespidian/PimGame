@@ -159,6 +159,10 @@ public class DragObj : MonoBehaviour
 			objRb.useGravity = false;
 			objRb.AddForce(new Vector3(0, 9.8f, 0), ForceMode.Acceleration);
 		}
+
+		if(selfRestrictions.destroyOnFall == true && transform.position.y <= -500){
+			Destroy(gameObject);
+		}
     }
 
     void OnTriggerStay(Collider col){
@@ -175,15 +179,19 @@ public class DragObj : MonoBehaviour
     		objRb.drag = 1;
     	}
     }
+
     void OnCollisionEnter(Collision collision){
     	if(collision.relativeVelocity.magnitude > 10){
-    		Instantiate(thePlayer.smokeParticle, collision.contacts[0].point, Quaternion.identity);
+    		int collisionNum = 0;
+    		foreach(ContactPoint contact in collision.contacts){
+    			Instantiate(thePlayer.smokeParticle, collision.contacts[collisionNum].point, Quaternion.identity);
+    			collisionNum++;
+    		}
     	}
     }
 
     public void DynamicObject(){
-    	//objRb.useGravity = true;
-		objRb.freezeRotation = false;
+		//objRb.freezeRotation = false;
 	  	objRb.isKinematic = false;
 	  	dragging = false;
 
@@ -191,25 +199,10 @@ public class DragObj : MonoBehaviour
 	  	freezeObject = false;
     }
     void HoldObject() {
-    	//objRb.useGravity = true;
-		objRb.freezeRotation = true;
+		//objRb.freezeRotation = true;
 		objRb.isKinematic = false;
 		dragging = true;
 		
-		//objRb.velocity = (thePlayer.destPoint.position - this.transform.position) * dragSpeed;
-
-		//objRb.rotation = startRot;
-		//objRb.rotation = Quaternion.Euler(startRot.x, startRot.y + GameObject.Find("Player").transform.rotation.y, startRot.z);
-
-		/*if(startRot != this.transform.rotation){
-			objRb.AddTorque((Vector3.right * (startRot.x - transform.rotation.x)) * 100);
-			objRb.AddTorque((Vector3.up * (startRot.y - transform.rotation.y)) * 100);
-			objRb.AddTorque((Vector3.forward * (startRot.z - transform.rotation.z)) * 100);
-			//objRb.AddTorque(startRot.up - transform.rotation.up);
-		}*/
-
-		//Debug.Log(rayHitDifference);
-
 
 
 		objRb.velocity = (thePlayer.destPoint.position - transform.TransformDirection(rayHitDifference) - this.transform.position) * dragSpeed;
@@ -222,8 +215,7 @@ public class DragObj : MonoBehaviour
     }
     void FreezeObject() {
     	if(dragging == true){
-	    	//objRb.useGravity = false;
-		    objRb.freezeRotation = true;
+		    //objRb.freezeRotation = true;
 		    objRb.isKinematic = true;
 		    dragging = false;
 		}

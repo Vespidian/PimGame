@@ -30,7 +30,14 @@ public class CharController : MonoBehaviour
 	public float speed = 6;
 	public float sprint = 14;
 	public float crouch = 4;
+	private float tempSpeed;
+	public float jumpSpeedIncrease = 6;
+	public float stallSpeed = 2;
 	public float jumpHeight = 7;
+
+	private float speedCopy;
+	private float sprintCopy;
+	private float crouchCopy;
 	private int walkType = 0;//0 = walk / 1 = sprint / 2 = crouch
 	private bool landed;
 	private bool flying = false;
@@ -39,6 +46,7 @@ public class CharController : MonoBehaviour
 	public bool sitting = false;
 	private GameObject chairObject;
 	public bool allowMovement = true;
+	private int jumpWalkType;
 
 	[Header("Object Respawn Settings")]
 	public int objSpawnRange = 5;
@@ -46,6 +54,7 @@ public class CharController : MonoBehaviour
 	public float lowestPossiblePoint = -30;
 
 	[Header("Misc")]
+	private int collisionCount = 0;
 	private CamMouseLook cameraVars;
 	public GameObject smokeParticle;
 
@@ -63,6 +72,8 @@ public class CharController : MonoBehaviour
 
 	private Weapons playerTools;
     private PhysicsRestrictions physRestricts;
+
+    private Door doorScript;
 	//private SpawnObjects spawningObj;
     // Start is called before the first frame update
     void Start()
@@ -72,8 +83,12 @@ public class CharController : MonoBehaviour
 		//spawningObj = GameObject.Find("SpawnSelect").GetComponent<SpawnObjects>();
 
 
+		speedCopy = speed;
+		sprintCopy = sprint;
+		crouchCopy = crouch;
+
 		rb = this.gameObject.GetComponent<Rigidbody>();
-		line = GameObject.Find("Arms").GetComponent<LineRenderer>();
+		line = GameObject.Find("Pistol").GetComponent<LineRenderer>();
 		upLift = -Physics.gravity * (2 - rb.velocity.y * 5);
 
 		line.SetPosition(0, Vector3.zero);
@@ -87,6 +102,12 @@ public class CharController : MonoBehaviour
     	}
 
     	if(pauseGame == false){
+    		if(Input.GetAxis("Vertical") == 0 && Input.GetAxis("Horizontal") == 0){
+    			walkType = -1;
+    		}else{
+    			walkType = 0;
+    		}
+
 	    	if(Input.GetKey(KeyCode.LeftShift)){
 	    		walkType = 1;
 	    	}else if(Input.GetKeyUp(KeyCode.LeftShift)){
@@ -107,10 +128,7 @@ public class CharController : MonoBehaviour
 	    	}
 
 	    	if(Input.GetKeyDown(KeyCode.Space)){
-	    		if(landed == true){
-	    			jump();
-	    		}
-	    		landed = false;
+	    		jump();
 	    	}
 
 	    	if(Input.GetKeyDown(KeyCode.X)){//Toggle flight
@@ -130,14 +148,26 @@ public class CharController : MonoBehaviour
 	    	if(Input.GetKeyDown(KeyCode.E) && toggleHold == false){
 	    		ToggleSit("toggle");
 
-	    		if(physRestricts.hinge == true && hit.collider.gameObject.GetComponent<Steering>() != null){
-	    			int hingeDirection = hit.collider.gameObject.GetComponent<Steering>().steerDir;
-	    			if(hingeDirection == 1){
-	    				hingeDirection = 2;
-	    			}else if(hingeDirection == 2){
-	    				hingeDirection = 1;
+	    		if(hit.collider.gameObject.GetComponent<Steering>() != null){
+	    			if(physRestricts.hinge == true){
+		    			int hingeDirection = hit.collider.gameObject.GetComponent<Steering>().steerDir;
+		    			if(hingeDirection == 1){
+		    				hingeDirection = 2;
+		    			}else if(hingeDirection == 2){
+		    				hingeDirection = 1;
+		    			}
+		    			hit.collider.gameObject.GetComponent<Steering>().steerDir = hingeDirection;
 	    			}
-	    			hit.collider.gameObject.GetComponent<Steering>().steerDir = hingeDirection;
+	    		}
+	    		if(hit.collider.gameObject.GetComponent<Door>() != null){
+	    			doorScript = hit.collider.gameObject.GetComponent<Door>();
+	    			if(doorScript.doorTypeText == "teleport"){
+	    				rb.position = doorScript.destination.transform.position + new Vector3(0, 2, 0);
+	    			}else if(doorScript.doorTypeText == "changescene"){
+	    				doorScript.setScene();
+	    			}else if(doorScript.doorTypeText == "openable"){
+	    				doorScript.ToggleState();
+	    			}
 	    		}
 	    	}
 	    	if(sitting){
@@ -154,22 +184,26 @@ public class CharController : MonoBehaviour
 
     void FixedUpdate() {
     	if(pauseGame == false && allowMovement == true){
-    		//rb.isKinematic = false;
+    		destPoint.rotation = Quaternion.Euler(0, 0, 0);
+
 	    	if(walkType == 0){
-				translation = Input.GetAxis("Vertical") * speed; 
-			   	strafe = Input.GetAxis("Horizontal") * speed;
+				translation = Input.GetAxis("Vertical") * speedCopy; 
+			   	strafe = Input.GetAxis("Horizontal") * speedCopy;
 			}else if(walkType == 1){
-				translation = Input.GetAxis("Vertical") * sprint; 
-			   	strafe = Input.GetAxis("Horizontal") * sprint;
+				translation = Input.GetAxis("Vertical") * sprintCopy; 
+			   	strafe = Input.GetAxis("Horizontal") * sprintCopy;
 			}else if(walkType == 2){
-				translation = Input.GetAxis("Vertical") * crouch; 
-			   	strafe = Input.GetAxis("Horizontal") * crouch;
+				translation = Input.GetAxis("Vertical") * crouchCopy; 
+			   	strafe = Input.GetAxis("Horizontal") * crouchCopy;
 			}
 		    if(walkType == 0){//WALK
 			    direction = transform.InverseTransformDirection(GetComponent<Rigidbody>().velocity);
 			    direction.z = translation;
 			    direction.x = strafe;
 			    rb.velocity = transform.TransformDirection(direction);
+			    //rb.AddForce(transform.TransformDirection(direction*5), ForceMode.Force);
+
+			    //rb.MovePosition(transform.position + transform.InverseTransformDirection(direction));
 			}else if(walkType == 1) {//SPRINT
 			    direction = transform.InverseTransformDirection(GetComponent<Rigidbody>().velocity);
 			    direction.z = translation;
@@ -181,10 +215,15 @@ public class CharController : MonoBehaviour
 			    direction.x = strafe;
 				rb.velocity = transform.TransformDirection(direction);
 			}else{
-				rb.velocity = Vector3.zero;
+				//rb.velocity = new Vector3(0, rb.velocity.y, 0);
+				//rb.velocity = Vector3.zero;
+				rb.velocity = rb.velocity;
 			}
 
 			if(flying == true) {
+				speedCopy = speed;
+				sprintCopy = sprint;
+				crouchCopy = crouch;
 				GetComponent<Collider>().enabled = false;
 
 				rb.velocity = (GameObject.Find("Camera").transform.forward * translation*2) + (GameObject.Find("Camera").transform.right * strafe*2);
@@ -192,7 +231,7 @@ public class CharController : MonoBehaviour
 					rb.velocity = new Vector3(0, 0, 0);
 				}
 				if(Input.GetKey(KeyCode.Space)){
-					rb.velocity = new Vector3(rb.velocity.x, sprint, rb.velocity.z);
+					rb.velocity = new Vector3(rb.velocity.x, sprintCopy, rb.velocity.z);
 				}else if(Input.GetKeyUp(KeyCode.Space)){
 					rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
 				}
@@ -204,10 +243,8 @@ public class CharController : MonoBehaviour
 		    	rayHitting = true;
 		   		Debug.DrawRay(GameObject.Find("Camera").transform.position, GameObject.Find("Camera").transform.forward * hit.distance, Color.red);
 		   		
-		   		if(Input.GetMouseButton(0) && cameraVars.mouseMove == true && playerTools.weapon == 1){
-		   			line.SetPosition(0, Vector3.zero);
-			   		line.SetPosition(1, transform.InverseTransformPoint(hit.point));
-			   		//lineDistance = GameObject.Find("Arms").transform.InverseTransformPoint(hit.point);
+		   		if(Input.GetMouseButton(0) && cameraVars.mouseMove == true && playerTools.weapon == 1 && toggleHold == true){
+			   		line.SetPosition(1, GameObject.Find("Pistol").transform.InverseTransformPoint(hit.point));
 		   		}else{
 		   			line.SetPosition(1, Vector3.zero);
 		   		}
@@ -262,10 +299,44 @@ public class CharController : MonoBehaviour
     }
 
     void jump(){
-    	rb.AddForce(0, jumpHeight, 0, ForceMode.Impulse);
+    	if(collisionCount >= 1){
+    		landed = true;
+    	}
+    	if(landed == true){
+    		rb.AddForce(0, jumpHeight, 0, ForceMode.Impulse);
+
+    		jumpWalkType = walkType;
+
+	    	landed = false;
+    		if(jumpWalkType == 1){
+    			sprintCopy += jumpSpeedIncrease;
+    		}else if(jumpWalkType == 0){
+    			speedCopy += jumpSpeedIncrease;
+    		}
+    		if(flying != true){
+	    		if(Mathf.Abs(rb.velocity.x) <= 0 || Mathf.Abs(rb.velocity.z) <= 0){
+	    			speedCopy = 2;
+	    			sprintCopy = 2;
+	    			crouchCopy = 2;
+	    		}
+    		}
+	    }
     }
+    
     void OnCollisionEnter(Collision col){
+    	collisionCount++;
+
+		speedCopy = speed;
+		sprintCopy = sprint;
+		crouchCopy = crouch;
+
     	landed = true;
+    }
+    void OnCollisionExit(){
+    	collisionCount--;
+    	if(collisionCount == 0){
+    		landed = false;
+    	}
     }
 
     void setFlight() {
