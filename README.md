@@ -6,10 +6,10 @@
 + Z to zoom
 + T to reset the scene
 + Escape to pause / show menu
++ Press X to toggle slomo
 #### Press C to toggle flight
 + Space moves you up
 + To move in a direction, point the camera in said direction
-#### Press X to toggle slomo
 
 ## Menus
 + Press and hold Q to open the menus
