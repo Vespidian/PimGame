@@ -3,13 +3,13 @@
 ## Controls
 + Shift to sprint
 + Control to crouch
-+ Number keys to spawn objects
 + Z to zoom
-+ R to reset the scene
++ T to reset the scene
 + Escape to pause / show menu
-#### Press C to enable flight
-+ Control moves you down
-+ Space moves you down
+#### Press C to toggle flight
++ Space moves you up
++ To move in a direction, point the camera in said direction
+#### Press X to toggle slomo
 
 ## Menus
 + Press and hold Q to open the menus
@@ -25,7 +25,7 @@
 + F unfreezes all objects
 + R to unfreeze object you are pointing at
 + E to rotate held object
-+ Right click to freeze item in place, and release click to let go of object.
++ Right click to freeze item in place
 ### Impulse Gun
 + Used to add a sudden force onto objects in the direction you are looking.
 + Will also unfreeze objects.
