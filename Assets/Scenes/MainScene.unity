@@ -8,8 +8,9 @@ OcclusionCullingSettings:
     smallestOccluder: 5
     smallestHole: 0.25
     backfaceThreshold: 100
-  m_SceneGUID: 00000000000000000000000000000000
-  m_OcclusionCullingData: {fileID: 0}
+  m_SceneGUID: 4fd63384419ea8d4989c428177df8271
+  m_OcclusionCullingData: {fileID: 36300000, guid: 183b56444dfc41d42b8d71a7acfee974,
+    type: 2}
 --- !u!104 &2
 RenderSettings:
   m_ObjectHideFlags: 0
@@ -44,7 +45,7 @@ RenderSettings:
 LightmapSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 11
-  m_GIWorkflowMode: 0
+  m_GIWorkflowMode: 1
   m_GISettings:
     serializedVersion: 2
     m_BounceScale: 1
@@ -97,7 +98,8 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 0}
+  m_LightingDataAsset: {fileID: 112000000, guid: 8efde31c63fed0d42b6c68699837a6ca,
+    type: 2}
   m_UseShadowmask: 1
 --- !u!196 &4
 NavMeshSettings:
@@ -197,6 +199,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: O2
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 6d92e3f3e19aafc4b83b6d005e82a334,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6d92e3f3e19aafc4b83b6d005e82a334, type: 3}
@@ -382,6 +389,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: O2_hall
       objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 3b517d018ac3d2f479aca0d95e45867d,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3b517d018ac3d2f479aca0d95e45867d, type: 3}
 --- !u!1001 &418749694
@@ -479,7 +491,7 @@ PrefabInstance:
     - target: {fileID: -927199367670048503, guid: b0a787455ab18964aae4ceaf4f76206d,
         type: 3}
       propertyPath: m_StaticEditorFlags
-      value: 0
+      value: 4294967295
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b0a787455ab18964aae4ceaf4f76206d, type: 3}
@@ -785,6 +797,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: door
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 36162e6e2fe533a4f8a2532a44e75ceb,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 36162e6e2fe533a4f8a2532a44e75ceb, type: 3}
@@ -1195,7 +1212,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!64 &1613489899
 MeshCollider:

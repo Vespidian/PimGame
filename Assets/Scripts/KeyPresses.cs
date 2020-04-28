@@ -26,17 +26,21 @@ public class KeyPresses : MonoBehaviour
 	//SCRIPTS
 	private CamMouseLook cameraVars;
 	private CharController thePlayer;
+	private PlayerSounds sounds;
+	private UIFade slomoFade;
 
     // Start is called before the first frame update
     void Start()
     {
     	cameraVars = GameObject.Find("Camera").GetComponent<CamMouseLook>();
 		thePlayer = GameObject.Find("Player").GetComponent<CharController>();
-
+		sounds = GameObject.Find("Camera").GetComponent<PlayerSounds>();
+    	slomoFade = GameObject.Find("SlomoEffect").GetComponent<UIFade>();
 
     	buttons = GameObject.Find("buttons");
     	crosshair = GameObject.Find("crosshair");
     	spawnSelection = GameObject.Find("Q-Menu");
+
     	//customKeys = GameObject.Find("CustomKeys").transform;
 
     	DefaultUIState();
@@ -94,6 +98,16 @@ public class KeyPresses : MonoBehaviour
 		    		UnFocusMouse();
 		    	}
 		    }
+		    if(Input.GetKeyDown(KeyCode.X)){
+		    	if(thePlayer.allowSlomo == true){
+			    	if(Time.timeScale == 1){
+			    		SlomoTime();
+			    	}else if(Time.timeScale == 0.5){
+			    		NormalTime();
+			    	}
+			    	slomoFade.Fade();
+			    }
+			}
     	}
 
     	/*keyEvent = Event.current;
@@ -113,15 +127,26 @@ public class KeyPresses : MonoBehaviour
     	buttons.SetActive(true);
 		crosshair.SetActive(false);
 		thePlayer.pauseGame = true;
-		Time.timeScale = 0;
+		FreezeTime();
 		UnFocusMouse();
     }
     void UnPauseGame(){
     	buttons.SetActive(false);
 		crosshair.SetActive(true);
 		thePlayer.pauseGame = false;
-		Time.timeScale = 1;
+		NormalTime();
 		FocusMouse();
+    }
+    void NormalTime(){
+		Time.timeScale = 1;
+		sounds.AudioChoice("speedtime");
+    }
+    void FreezeTime(){
+		Time.timeScale = 0;
+    }
+    void SlomoTime(){
+    	Time.timeScale = 0.5f;
+		sounds.AudioChoice("slowtime");
     }
 
     void UnFocusMouse(){

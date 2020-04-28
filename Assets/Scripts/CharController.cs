@@ -46,6 +46,8 @@ public class CharController : MonoBehaviour
 	public bool sitting = false;
 	private GameObject chairObject;
 	public bool allowMovement = true;
+	public bool allowFlight = true;
+	public bool allowSlomo = true;
 	private int jumpWalkType;
 
 	[Header("Object Respawn Settings")]
@@ -120,24 +122,33 @@ public class CharController : MonoBehaviour
 	    		GetComponent<CapsuleCollider>().height = 2;
 	    		GetComponent<CapsuleCollider>().center = new Vector3(0, -0.5f, 0);
 
+	    		transform.GetChild(0).GetComponent<CapsuleCollider>().height = 1.7f;
+	    		transform.GetChild(0).GetComponent<CapsuleCollider>().center = new Vector3(0, -0.3f, 0);
+
+
 	    	}else if(Input.GetKeyUp(KeyCode.LeftControl)){
 	    		walkType = 0;
 	    		GameObject.Find("Camera").transform.localPosition = new Vector3(0, 1, 0);
 	    		GetComponent<CapsuleCollider>().height = 3;
 	    		GetComponent<CapsuleCollider>().center = new Vector3(0, 0, 0);
+
+	    		transform.GetChild(0).GetComponent<CapsuleCollider>().height = 2.7f;
+	    		transform.GetChild(0).GetComponent<CapsuleCollider>().center = new Vector3(0, 0.2f, 0);
 	    	}
 
 	    	if(Input.GetKeyDown(KeyCode.Space)){
 	    		jump();
 	    	}
 
-	    	if(Input.GetKeyDown(KeyCode.X)){//Toggle flight
-	    		if(flying == true){//disable
-	    			flying = false;
-	    			setFlight();
-	    		}else if(flying == false){//enable
-	    			flying = true;
-	    			setFlight();
+	    	if(Input.GetKeyDown(KeyCode.C)){//Toggle flight
+	    		if(allowFlight == true){
+		    		if(flying == true){//disable
+		    			flying = false;
+		    			setFlight();
+		    		}else if(flying == false){//enable
+		    			flying = true;
+		    			setFlight();
+		    		}
 	    		}
 	    	}
 
@@ -163,6 +174,7 @@ public class CharController : MonoBehaviour
 	    			doorScript = hit.collider.gameObject.GetComponent<Door>();
 	    			if(doorScript.doorTypeText == "teleport"){
 	    				rb.position = doorScript.destination.transform.position + new Vector3(0, 2, 0);
+	    				//transform.localRotation = Quaternion.AngleAxis(doorScript.destination.transform.rotation.y, transform.up);
 	    			}else if(doorScript.doorTypeText == "changescene"){
 	    				doorScript.setScene();
 	    			}else if(doorScript.doorTypeText == "openable"){
@@ -196,47 +208,49 @@ public class CharController : MonoBehaviour
 				translation = Input.GetAxis("Vertical") * crouchCopy; 
 			   	strafe = Input.GetAxis("Horizontal") * crouchCopy;
 			}
-		    if(walkType == 0){//WALK
+		    if(walkType == 0 || walkType == 1 || walkType == 2){//WALK
 			    direction = transform.InverseTransformDirection(GetComponent<Rigidbody>().velocity);
-			    direction.z = translation;
 			    direction.x = strafe;
-			    rb.velocity = transform.TransformDirection(direction);
-			    //rb.AddForce(transform.TransformDirection(direction*5), ForceMode.Force);
+			    //direction.y = 0;
+			    direction.z = translation;
 
-			    //rb.MovePosition(transform.position + transform.InverseTransformDirection(direction));
-			}else if(walkType == 1) {//SPRINT
-			    direction = transform.InverseTransformDirection(GetComponent<Rigidbody>().velocity);
-			    direction.z = translation;
-			    direction.x = strafe;
-				rb.velocity = transform.TransformDirection(direction);
-			}else if(walkType == 2) {//CROUCH
-			    direction = transform.InverseTransformDirection(GetComponent<Rigidbody>().velocity);
-			    direction.z = translation;
-			    direction.x = strafe;
-				rb.velocity = transform.TransformDirection(direction);
+			    //rb.velocity = transform.TransformDirection(direction);
+
+			    Vector3 forceToAdd = (transform.TransformDirection(direction) - rb.velocity)*20;
+			    rb.AddForce(new Vector3(forceToAdd.x, 0, forceToAdd.z), ForceMode.Acceleration);
 			}else{
 				//rb.velocity = new Vector3(0, rb.velocity.y, 0);
 				//rb.velocity = Vector3.zero;
-				rb.velocity = rb.velocity;
+				//rb.velocity = rb.velocity;
 			}
 
-			if(flying == true) {
-				speedCopy = speed;
-				sprintCopy = sprint;
-				crouchCopy = crouch;
-				GetComponent<Collider>().enabled = false;
+			if(allowFlight == true){
+				if(flying == true) {
+					speedCopy = speed;
+					sprintCopy = sprint;
+					crouchCopy = crouch;
+					foreach(Collider col in GetComponents<Collider>()){
+						col.enabled = false;
+					}
+					//GetComponent<Collider>().enabled = false;
+					//GetComponentInChildren<Collider>().enabled = false;
 
-				rb.velocity = (GameObject.Find("Camera").transform.forward * translation*2) + (GameObject.Find("Camera").transform.right * strafe*2);
-				if((Input.GetKeyUp(KeyCode.W)) || (Input.GetKeyUp(KeyCode.A)) || (Input.GetKeyUp(KeyCode.S)) || (Input.GetKeyUp(KeyCode.D))){
-					rb.velocity = new Vector3(0, 0, 0);
+					rb.velocity = (GameObject.Find("Camera").transform.forward * translation*2) + (GameObject.Find("Camera").transform.right * strafe*2);
+					if((Input.GetKeyUp(KeyCode.W)) || (Input.GetKeyUp(KeyCode.A)) || (Input.GetKeyUp(KeyCode.S)) || (Input.GetKeyUp(KeyCode.D))){
+						rb.velocity = new Vector3(0, 0, 0);
+					}
+					if(Input.GetKey(KeyCode.Space)){
+						rb.velocity = new Vector3(rb.velocity.x, sprintCopy, rb.velocity.z);
+					}else if(Input.GetKeyUp(KeyCode.Space)){
+						rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
+					}
+				}else{
+					foreach(Collider col in GetComponents<Collider>()){
+						col.enabled = true;
+					}
+					//GetComponent<Collider>().enabled = true;
+					//GetComponentInChildren<Collider>().enabled = false;
 				}
-				if(Input.GetKey(KeyCode.Space)){
-					rb.velocity = new Vector3(rb.velocity.x, sprintCopy, rb.velocity.z);
-				}else if(Input.GetKeyUp(KeyCode.Space)){
-					rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
-				}
-			}else{
-				GetComponent<Collider>().enabled = true;
 			}
 		}
 		    if (Physics.Raycast(GameObject.Find("Camera").transform.position, GameObject.Find("Camera").transform.forward, out hit, Mathf.Infinity)){
@@ -299,7 +313,7 @@ public class CharController : MonoBehaviour
     }
 
     void jump(){
-    	if(collisionCount >= 1){
+    	if(collisionCount >= 3){//Exclude the 2 colliders on the player body colliding constantly
     		landed = true;
     	}
     	if(landed == true){
@@ -329,8 +343,9 @@ public class CharController : MonoBehaviour
 		speedCopy = speed;
 		sprintCopy = sprint;
 		crouchCopy = crouch;
-
-    	landed = true;
+		if(col.gameObject.layer != gameObject.layer){//Stop self collisions
+    		landed = true;
+    	}
     }
     void OnCollisionExit(){
     	collisionCount--;
@@ -349,8 +364,8 @@ public class CharController : MonoBehaviour
 
 
     void OnTriggerStay(Collider col){
-    	if(col.gameObject.name == "Water"){
-    		rb.AddForceAtPosition(upLift, transform.position);
+    	if(col.gameObject.tag == "Water"){
+    		rb.AddForceAtPosition(upLift/2, transform.position);
     	}
     }
 }

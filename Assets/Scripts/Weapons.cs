@@ -10,7 +10,7 @@ public class Weapons : MonoBehaviour
 	private Text weaponTextMain;
     private Text weaponTextPrev;
     private Text weaponTextNext;
-	private int numOfWeapons = 3;
+	public int numOfWeapons = 3;
 	private bool canChangeWeapon = true;
 
     private Text selectedWeapon;
@@ -51,6 +51,17 @@ public class Weapons : MonoBehaviour
     Gravity Toggle
     Spawn Balloon
     */
+
+    [Header("Tool Status")]
+    public bool deleteTool = true;
+    public bool weldTool = true;
+    public bool thrusterTool = true;
+    public bool wheelTool = true;
+    public bool duplicatorTool = true;
+    public bool hingeTool = true;
+    public bool gravityTool = true;
+    public bool balloonTool = true;
+
     public int tool = 1;
 
     //SCRIPTS
@@ -58,6 +69,7 @@ public class Weapons : MonoBehaviour
     private DragObj draggedObjectScript;
     private CamMouseLook cameraVars;
     private PhysicsRestrictions objectRestrictions;
+    private ToggleUI weaponButtons;
 
     // Start is called before the first frame update
     void Start()
@@ -67,6 +79,7 @@ public class Weapons : MonoBehaviour
         weaponTextPrev = GameObject.Find("WeaponPrev").GetComponent<Text>();
         weaponTextMain = GameObject.Find("WeaponMain").GetComponent<Text>();
         weaponTextNext = GameObject.Find("WeaponNext").GetComponent<Text>();
+        weaponButtons = GameObject.Find("Canvas").GetComponent<ToggleUI>();
 
         selectedWeapon = GameObject.Find("Weapon").GetComponent<Text>();
         selectedWeaponFunction = GameObject.Find("Function").GetComponent<Text>();
@@ -74,13 +87,14 @@ public class Weapons : MonoBehaviour
         destConfigJoint = cameraVars.gameObject.transform.Find("Destination").GetComponent<ConfigurableJoint>();
 
         ToolDescriptor();
+        SetWeaponStatus();
     }
 
     // Update is called once per frame
     void Update()
     {
         //Scroll through weapons
-	    if(canChangeWeapon == true){
+	    if(canChangeWeapon == true && weaponButtons.AlwaysShown.activeSelf == true){
         	if(Input.GetAxisRaw("Mouse ScrollWheel") > 0){//-
 	   			if(weapon != 1){
 	   				weapon--;
@@ -88,6 +102,7 @@ public class Weapons : MonoBehaviour
 	   				weapon = numOfWeapons;
 	   			}
                 SpawnPreview("delete");
+                CheckWeapon();
 	   		}if(Input.GetAxisRaw("Mouse ScrollWheel") < 0){//+
 	   			if(weapon != numOfWeapons){
 	   				weapon++;
@@ -95,9 +110,9 @@ public class Weapons : MonoBehaviour
 	   				weapon = 1;
 	   			}
                 SpawnPreview("delete");
+                CheckWeapon();
 	   		}
         }
-        CheckWeapon();
         if(cameraVars.mouseMove == true){
             if(weapon == 3){
                 switch(tool){
@@ -114,11 +129,16 @@ public class Weapons : MonoBehaviour
             }
             if(thePlayer.hit.collider != null){
                 if(Input.GetMouseButtonDown(0)){//PRESSED LEFT MOUSE BUTTON
+                    canChangeWeapon = false;
                     if(weapon == 1){
-                        if(draggedObjectRb != null){
-                            objStartRotation = draggedObjectRb.gameObject.transform.rotation;
-                        }
+                        if(draggedObjectRb != null && objectRestrictions != null){
+                            if(objectRestrictions.allowDragging == true){
+                                objStartRotation = draggedObjectRb.gameObject.transform.rotation;
+                                destConfigJoint.connectedBody = draggedObjectRb;
+                                destConfigJoint.targetRotation = objStartRotation;
 
+                            }
+                        }
                     }else if(weapon == 2){
                         ImpulseObject();
 
@@ -142,22 +162,10 @@ public class Weapons : MonoBehaviour
                         }
                     }
                 }
-                if(Input.GetMouseButton(0)){//PRESSING LEFT MOUSE BUTTON
-                    if(weapon == 1){
-                        if(objectRestrictions != null){
-                            if(objectRestrictions.allowDragging == true){
-                                destConfigJoint.connectedBody = draggedObjectRb;
-                                destConfigJoint.targetRotation = objStartRotation;
 
-                            }
-                        }
-                    }
-                    canChangeWeapon = false;
-                }else{
-                    canChangeWeapon = true;
-                }
 
                 if(Input.GetMouseButtonUp(0)){
+                    canChangeWeapon = true;
                     if(weapon == 1){
                         destConfigJoint.connectedBody = null;
                     }
@@ -209,7 +217,57 @@ public class Weapons : MonoBehaviour
         
     }//end FixedUpdate
 
-    void CheckWeapon(){
+    public void SetWeaponStatus(){
+        if(deleteTool){
+            weaponButtons.deleteTool.SetActive(true);
+        }else {
+            weaponButtons.deleteTool.SetActive(false);
+        }
+
+        if(weldTool){
+            weaponButtons.weldTool.SetActive(true);
+        }else {
+            weaponButtons.weldTool.SetActive(false);
+        }
+
+        if(thrusterTool){
+            weaponButtons.thrusterTool.SetActive(true);
+        }else {
+            weaponButtons.thrusterTool.SetActive(false);
+        }
+
+        if(wheelTool){
+            weaponButtons.wheelTool.SetActive(true);
+        }else {
+            weaponButtons.wheelTool.SetActive(false);
+        }
+
+        if(duplicatorTool){
+            weaponButtons.duplicatorTool.SetActive(true);
+        }else {
+            weaponButtons.duplicatorTool.SetActive(false);
+        }
+
+        if(hingeTool){
+            weaponButtons.hingeTool.SetActive(true);
+        }else {
+            weaponButtons.hingeTool.SetActive(false);
+        }
+
+        if(gravityTool){
+            weaponButtons.gravityTool.SetActive(true);
+        }else {
+            weaponButtons.gravityTool.SetActive(false);
+        }
+
+        if(balloonTool){
+            weaponButtons.balloonTool.SetActive(true);
+        }else {
+            weaponButtons.balloonTool.SetActive(false);
+        }
+    }
+
+    public void CheckWeapon(){
     	if(weapon == 1){//PHYSICS GUN
     		PhysicsGun();
             ToolDescriptor();
@@ -224,6 +282,13 @@ public class Weapons : MonoBehaviour
         }
     }
     //WEAPON UI
+    public void SetTextAliases(){
+        weaponTextPrev = GameObject.Find("WeaponPrev").GetComponent<Text>();
+        weaponTextMain = GameObject.Find("WeaponMain").GetComponent<Text>();
+        weaponTextNext = GameObject.Find("WeaponNext").GetComponent<Text>();
+        selectedWeapon = GameObject.Find("Weapon").GetComponent<Text>();
+        selectedWeaponFunction = GameObject.Find("Function").GetComponent<Text>();
+    }
     void PhysicsGun() {
         weaponTextPrev.text = weapon3;//CHANGE THIS WHEN ADDING WEAPONS
 

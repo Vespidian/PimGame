@@ -9,6 +9,7 @@ TagManager:
   - Trash
   - Water
   - Sittable
+  - Trigger
   layers:
   - Default
   - TransparentFX

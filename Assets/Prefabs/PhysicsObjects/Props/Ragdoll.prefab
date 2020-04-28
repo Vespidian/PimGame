@@ -59,6 +59,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -183,12 +184,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6dd39132316a4a44d9c77f33f46ee61f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  allowDragging: 1
   allowDelete: 0
   allowWeld: 0
-  allowDragging: 1
   enableBuoyancy: 1
+  reverseGravity: 0
   allowThruster: 1
   allowWheel: 1
+  prop: 1
+  thruster: 0
+  wheel: 0
+  balloon: 0
+  hinge: 0
+  destroyOnFall: 1
 --- !u!1 &8258359275297271826
 GameObject:
   m_ObjectHideFlags: 0
@@ -248,6 +256,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -372,12 +381,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6dd39132316a4a44d9c77f33f46ee61f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  allowDragging: 1
   allowDelete: 0
   allowWeld: 0
-  allowDragging: 1
   enableBuoyancy: 1
+  reverseGravity: 0
   allowThruster: 1
   allowWheel: 1
+  prop: 1
+  thruster: 0
+  wheel: 0
+  balloon: 0
+  hinge: 0
+  destroyOnFall: 1
 --- !u!1 &8258359275311697324
 GameObject:
   m_ObjectHideFlags: 0
@@ -437,6 +453,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -561,12 +578,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6dd39132316a4a44d9c77f33f46ee61f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  allowDragging: 1
   allowDelete: 0
   allowWeld: 0
-  allowDragging: 1
   enableBuoyancy: 1
+  reverseGravity: 0
   allowThruster: 1
   allowWheel: 1
+  prop: 1
+  thruster: 0
+  wheel: 0
+  balloon: 0
+  hinge: 0
+  destroyOnFall: 1
 --- !u!1 &8258359275373426985
 GameObject:
   m_ObjectHideFlags: 0
@@ -626,6 +650,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -750,12 +775,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6dd39132316a4a44d9c77f33f46ee61f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  allowDragging: 1
   allowDelete: 0
   allowWeld: 0
-  allowDragging: 1
   enableBuoyancy: 1
+  reverseGravity: 0
   allowThruster: 1
   allowWheel: 1
+  prop: 1
+  thruster: 0
+  wheel: 0
+  balloon: 0
+  hinge: 0
+  destroyOnFall: 1
 --- !u!1 &8258359275590469667
 GameObject:
   m_ObjectHideFlags: 0
@@ -815,6 +847,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -939,12 +972,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6dd39132316a4a44d9c77f33f46ee61f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  allowDragging: 1
   allowDelete: 0
   allowWeld: 0
-  allowDragging: 1
   enableBuoyancy: 1
+  reverseGravity: 0
   allowThruster: 1
   allowWheel: 1
+  prop: 1
+  thruster: 0
+  wheel: 0
+  balloon: 0
+  hinge: 0
+  destroyOnFall: 1
 --- !u!1 &8258359275606747763
 GameObject:
   m_ObjectHideFlags: 0
@@ -1004,6 +1044,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -1128,12 +1169,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6dd39132316a4a44d9c77f33f46ee61f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  allowDragging: 1
   allowDelete: 0
   allowWeld: 0
-  allowDragging: 1
   enableBuoyancy: 1
+  reverseGravity: 0
   allowThruster: 1
   allowWheel: 1
+  prop: 1
+  thruster: 0
+  wheel: 0
+  balloon: 0
+  hinge: 0
+  destroyOnFall: 1
 --- !u!1 &8258359275750606756
 GameObject:
   m_ObjectHideFlags: 0
@@ -1193,6 +1241,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -1317,12 +1366,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6dd39132316a4a44d9c77f33f46ee61f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  allowDragging: 1
   allowDelete: 0
   allowWeld: 0
-  allowDragging: 1
   enableBuoyancy: 1
+  reverseGravity: 0
   allowThruster: 1
   allowWheel: 1
+  prop: 1
+  thruster: 0
+  wheel: 0
+  balloon: 0
+  hinge: 0
+  destroyOnFall: 1
 --- !u!1 &8258359276122774991
 GameObject:
   m_ObjectHideFlags: 0
@@ -1382,6 +1438,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -1506,12 +1563,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6dd39132316a4a44d9c77f33f46ee61f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  allowDragging: 1
   allowDelete: 0
   allowWeld: 0
-  allowDragging: 1
   enableBuoyancy: 1
+  reverseGravity: 0
   allowThruster: 1
   allowWheel: 1
+  prop: 1
+  thruster: 0
+  wheel: 0
+  balloon: 0
+  hinge: 0
+  destroyOnFall: 1
 --- !u!1 &8258359276183545499
 GameObject:
   m_ObjectHideFlags: 0
@@ -1571,6 +1635,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -1695,12 +1760,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6dd39132316a4a44d9c77f33f46ee61f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  allowDragging: 1
   allowDelete: 0
   allowWeld: 0
-  allowDragging: 1
   enableBuoyancy: 1
+  reverseGravity: 0
   allowThruster: 1
   allowWheel: 1
+  prop: 1
+  thruster: 0
+  wheel: 0
+  balloon: 0
+  hinge: 0
+  destroyOnFall: 1
 --- !u!1 &8258359276697865180
 GameObject:
   m_ObjectHideFlags: 0
@@ -1760,6 +1832,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -1884,12 +1957,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6dd39132316a4a44d9c77f33f46ee61f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  allowDragging: 1
   allowDelete: 0
   allowWeld: 0
-  allowDragging: 1
   enableBuoyancy: 1
+  reverseGravity: 0
   allowThruster: 1
   allowWheel: 1
+  prop: 1
+  thruster: 0
+  wheel: 0
+  balloon: 0
+  hinge: 0
+  destroyOnFall: 1
 --- !u!1 &8258359276802836913
 GameObject:
   m_ObjectHideFlags: 0
@@ -1960,6 +2040,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -2084,12 +2165,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6dd39132316a4a44d9c77f33f46ee61f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  allowDragging: 1
   allowDelete: 1
   allowWeld: 1
-  allowDragging: 1
   enableBuoyancy: 1
+  reverseGravity: 0
   allowThruster: 1
   allowWheel: 1
+  prop: 1
+  thruster: 0
+  wheel: 0
+  balloon: 0
+  hinge: 0
+  destroyOnFall: 1
 --- !u!1 &8258359276980598509
 GameObject:
   m_ObjectHideFlags: 0
@@ -2148,6 +2236,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -2227,9 +2316,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6dd39132316a4a44d9c77f33f46ee61f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  allowDragging: 1
   allowDelete: 0
   allowWeld: 0
-  allowDragging: 1
   enableBuoyancy: 1
+  reverseGravity: 0
   allowThruster: 1
   allowWheel: 1
+  prop: 1
+  thruster: 0
+  wheel: 0
+  balloon: 0
+  hinge: 0
+  destroyOnFall: 1

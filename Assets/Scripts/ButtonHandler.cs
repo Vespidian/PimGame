@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class ButtonHandler : MonoBehaviour
 {
+	public Text FPS;
 
 	//SCRIPTS
 	private StartScreen startBack;
@@ -20,6 +21,11 @@ public class ButtonHandler : MonoBehaviour
 		}
 	}
 
+	void Update(){
+		if(SceneManager.GetActiveScene().name != "StartMenu"){
+			FPS.GetComponent<Text>().text = (1f / Time.unscaledDeltaTime).ToString();
+		}
+	}
     public void quitGame() {
     	Application.Quit();
     }
@@ -28,7 +34,7 @@ public class ButtonHandler : MonoBehaviour
     	Invoke("loadInitialScene", 1);
     }
     void loadInitialScene() {
-    	SceneManager.LoadScene("SampleScene");
+    	SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 
     public void startMenu() {

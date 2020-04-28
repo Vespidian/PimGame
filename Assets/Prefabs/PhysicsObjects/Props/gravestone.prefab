@@ -11,10 +11,10 @@ GameObject:
   - component: {fileID: 5853549932978496412}
   - component: {fileID: 3197830723281017258}
   - component: {fileID: 9177337077697946963}
-  - component: {fileID: 1459527367214567332}
   - component: {fileID: 1459527367214567333}
   - component: {fileID: 1459527367214567330}
   - component: {fileID: 5502833760528113866}
+  - component: {fileID: 1833310937734539263}
   m_Layer: 0
   m_Name: gravestone
   m_TagString: Untagged
@@ -62,7 +62,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 0e6bf54fc8321944fa4d9813370b9e5b, type: 2}
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -83,20 +83,6 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!64 &1459527367214567332
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7449135745893601679}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Convex: 1
-  m_CookingOptions: 14
-  m_Mesh: {fileID: -5495902117074765545, guid: e83bdbde3ceb5d246a675f8ffc4bf500, type: 3}
 --- !u!54 &1459527367214567333
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -151,3 +137,17 @@ MonoBehaviour:
   wheel: 0
   balloon: 0
   hinge: 0
+  destroyOnFall: 1
+--- !u!65 &1833310937734539263
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7449135745893601679}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.5, y: 0.30000013, z: 2.1000004}
+  m_Center: {x: 0, y: 0, z: -0.04926605}

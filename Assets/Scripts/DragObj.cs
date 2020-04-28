@@ -167,7 +167,7 @@ public class DragObj : MonoBehaviour
 
     void OnTriggerStay(Collider col){
     	if(selfRestrictions.enableBuoyancy == true){
-    		if(col.gameObject.name == "Water"){
+    		if(col.gameObject.tag == "Water"){
     			objRb.AddForceAtPosition(buoyancyLift, transform.position);
     			objRb.drag = 3;
     			//objRb.AddForce(objRb.velocity * -1 * 1);
@@ -175,7 +175,7 @@ public class DragObj : MonoBehaviour
     	}
     }
     void OnTriggerExit(Collider col) {
-    	if(col.gameObject.name == "Water"){
+    	if(col.gameObject.tag == "Water"){
     		objRb.drag = 1;
     	}
     }

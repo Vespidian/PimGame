@@ -2,7 +2,10 @@ fileFormatVersion: 2
 guid: 68b0d4d95001a544f9a59af5497f244f
 ModelImporter:
   serializedVersion: 19300
-  internalIDToNameTable: []
+  internalIDToNameTable:
+  - first:
+      74: 9163229568960304385
+    second: Cube|Press.001
   externalObjects: {}
   materials:
     materialImportMode: 1
@@ -87,7 +90,7 @@ ModelImporter:
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
   autoGenerateAvatarMappingIfUnspecified: 1
-  animationType: 0
+  animationType: 2
   humanoidOversampling: 1
   avatarSetup: 0
   additionalBone: 0
